@@ -11,56 +11,56 @@ namespace ApiREST.Controllers
     [Route("api/[controller]")]
     public class RolesController : ControllerBase
     {
-        private IRolesServices rolesServices;
-        
-        public RolesController(IRolesServices rolServices){ rolesServices = rolServices; }
+        private IRolesService rolesService;
+
+        public RolesController(IRolesService rolService) { rolesService = rolService; }
 
         [HttpGet("GetAll")]
-        public ActionResult<IEnumerable<Roles>> GetAll ()
+        public ActionResult<IEnumerable<Roles>> GetAll()
         {
-            return Ok(rolesServices.GetAll());
+            return Ok(rolesService.GetAll());
         }
 
         [HttpGet("GetAllAsync")]
         public async Task<IEnumerable<Roles>> GetAllAsync()
         {
-            return await rolesServices.GetAllAsync();
+            return await rolesService.GetAllAsync();
         }
-        
+
         [HttpGet("GetUsuario/{id:int}")]
         public ActionResult<Roles> GetById(int id)
         {
-            Roles result = rolesServices.GetById(id);
-            if (result!= null)
+            Roles result = rolesService.GetById(id);
+            if (result != null)
             {
                 return Ok(result);
             }
-            return NotFound();    
+            return NotFound();
         }
 
         [HttpPost("AddItem")]
-        public ActionResult AddItem([FromBody]Roles rol)
+        public ActionResult AddItem([FromBody] Roles rol)
         {
-            rolesServices.PostRol(rol);
-            rolesServices.SaveChanges();
-            
+            rolesService.PostRol(rol);
+            rolesService.SaveChanges();
+
             return Ok();
         }
 
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Roles rol)
         {
-            rolesServices.PutRol(rol);
-            rolesServices.SaveChanges();
-            
+            rolesService.PutRol(rol);
+            rolesService.SaveChanges();
+
             return NotFound();
         }
 
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Roles rol)
         {
-            rolesServices.DeleteRol(rol);
-            rolesServices.SaveChanges();
+            rolesService.DeleteRol(rol);
+            rolesService.SaveChanges();
 
             return Ok();
         }

@@ -8,15 +8,15 @@ using ApiREST.Services;
 
 namespace ApiREST.ServicesImp
 {
-    public class RolesServices : IRolesServices
+    public class RolesService : IRolesService
     {
         public ApiDbContext dataProvider;
 
-        public RolesServices (ApiDbContext appDbContext) { dataProvider = appDbContext; }
-        
+        public RolesService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+
         public List<Roles> GetAll()
         {
-            
+
             return dataProvider.Roles.ToList();
         }
 
@@ -48,7 +48,7 @@ namespace ApiREST.ServicesImp
 
         public void DeleteRol(Roles rol)
         {
-            if(dataProvider.Roles.Any(r => r.Id == rol.Id))
+            if (dataProvider.Roles.Any(r => r.Id == rol.Id))
             {
                 dataProvider.Roles.Remove(rol);
             }
@@ -61,7 +61,7 @@ namespace ApiREST.ServicesImp
 
         public Task<List<Roles>> GetAllAsync()
         {
-            return Task.Factory.StartNew(()=>
+            return Task.Factory.StartNew(() =>
             {
                 return dataProvider.Roles.ToList();
             });
