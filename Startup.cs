@@ -37,14 +37,19 @@ namespace ApiREST
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiREST", Version = "v1" });
             });
 
-            services.AddDbContext<ApiDbContext>(opt => 
+            services.AddDbContext<ApiDbContext>(opt =>
             opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Inyección de dependencia.
-            
-            services.AddScoped<ApiDbContext,ApiDbContext>();
-            services.AddScoped<IRolesServices,RolesServices>();
-            
+
+            services.AddScoped<ApiDbContext, ApiDbContext>();
+            services.AddScoped<IRolesService, RolesService>();
+            services.AddScoped<IEstadosCivilesService, EstadosCivilesService>();
+            services.AddScoped<IGenerosService, GenerosService>();
+            services.AddScoped<ILocalidadesService, LocalidadesService>();
+            services.AddScoped<INacionalidadesService, NacionalidadesService>();
+            services.AddScoped<ITiposDocsService, TiposDocsService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
