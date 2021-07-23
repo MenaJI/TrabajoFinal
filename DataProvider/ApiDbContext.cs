@@ -7,11 +7,10 @@ namespace ApiREST.DataProvider
 {
     public class ApiDbContext : DbContext
     {
-        public ApiDbContext(DbContextOptions options) : base(options) { }
+        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
 
         /* DbSets */
-        public DbSet<Roles> Roles { get; set; }
 
         public DbSet<EstadosCiviles> EstadosCiviles { get; set; }
 

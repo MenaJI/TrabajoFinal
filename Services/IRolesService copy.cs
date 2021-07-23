@@ -2,18 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiREST.Entities;
+using ApiREST.Models;
 
 namespace ApiREST.Services
 {
     public interface IRolesService
     {
         List<Roles> GetAll();
-        Task<List<Roles>> GetAllAsync();
-        Roles GetById(int id);
-        Roles GetByDescrip(string descrip);
-        void PostRol(Roles rol);
+        Roles GetByNombreRol(string nombreRol);
+        Task<Response> PostRol(RolModel model);
         void PutRol(Roles rol);
-        void DeleteRol(Roles rol);
+        Response DeleteRol(RolModel model);
         void SaveChanges();
     }
 }

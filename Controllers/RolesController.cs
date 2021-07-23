@@ -2,73 +2,51 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiREST.Entities;
+using ApiREST.Models;
 using ApiREST.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace ApiREST.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private IRolesService rolesService;
 
-        public RolesController(IRolesService rolService) { rolesService = rolService; }
+        public RolesController(IRolesService _rolesService) { rolesService = _rolesService; }
 
         [HttpGet("GetAll")]
-        public ActionResult<IEnumerable<Roles>> GetAll()
+        public IActionResult GetAll()
         {
-            return Ok(rolesService.GetAll());
-        }
+            var result = rolesService.GetAll();
 
-        [HttpGet("GetAllAsync")]
-        public async Task<IEnumerable<Roles>> GetAllAsync()
-        {
-            return await rolesService.GetAllAsync();
-        }
-
-        [HttpGet("GetUsuario/{id:int}")]
-        public ActionResult<Roles> GetById(int id)
-        {
-            Roles result = rolesService.GetById(id);
-            if (result != null)
+            if (result.Any())
             {
                 return Ok(result);
             }
-            return NotFound();
+
+            return NoContent();
         }
 
-        [HttpPost("AddItem")]
-        public ActionResult AddItem([FromBody] Roles rol)
+        [HttpPost("RegistrarRol")]
+        public async Task<IActionResult> AddItem(RolModel model)
         {
-            rolesService.PostRol(rol);
-            rolesService.SaveChanges();
+            var result = await rolesService.PostRol(model);
 
-            return Ok();
+            return Ok(result);
         }
 
-        [HttpPut("ChangeItem")]
-        public ActionResult RemplaseItem(Roles rol)
+        [HttpDelete("BorrarRol")]
+        public IActionResult RemoveItem(RolModel model)
         {
-            rolesService.PutRol(rol);
-            rolesService.SaveChanges();
+            var result = rolesService.DeleteRol(model);
 
-            return NotFound();
+            return Ok(result);
         }
 
-        [HttpDelete("RemoveItem")]
-        public ActionResult RemoveItem(Roles rol)
-        {
-            rolesService.DeleteRol(rol);
-            rolesService.SaveChanges();
-
-            return Ok();
-        }
-
-        [HttpHead("/")]
-        public IActionResult GetActionResult()
-        {
-            return Ok();
-        }
     }
 }

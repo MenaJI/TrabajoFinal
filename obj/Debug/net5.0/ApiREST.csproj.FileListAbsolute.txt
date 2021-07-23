@@ -22,7 +22,6 @@ D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Microsoft.IdentityModel.P
 D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Microsoft.OpenApi.dll
-D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Repos\source\Trabajo Final\ApiRest\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -181,3 +180,11 @@ C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\obj\Debug\net5
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\obj\Debug\net5.0\ref\ApiREST.dll
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\obj\Debug\net5.0\ApiREST.pdb
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\obj\Debug\net5.0\ApiREST.genruntimeconfig.cache
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\AutoMapper.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
