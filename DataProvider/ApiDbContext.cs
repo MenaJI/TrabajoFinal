@@ -22,5 +22,8 @@ namespace ApiREST.DataProvider
         public DbSet<Nacionalidades> Nacionalidades { get; set; }
 
         public DbSet<TiposDocs> TiposDocs { get; set; }
+
+        public DbSet<Condiciones> Condiciones { get; set; }
+        public DbSet<Aulas> Aulas { get; set; }
     }
 }
