@@ -2,7 +2,7 @@
 
 namespace ApiREST.Migrations.ApiREST
 {
-    public partial class InitialCreate : Migration
+    public partial class initialApi : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

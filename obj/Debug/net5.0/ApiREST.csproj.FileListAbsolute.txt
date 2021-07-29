@@ -143,7 +143,6 @@ C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -188,3 +187,11 @@ D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Cryp
 D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 D:\Repos\source\Trabajo Final\ApiREST\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Braian\Documents\03- PROYECTOS\02- TRABAJO FINAL\ApiREST\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll

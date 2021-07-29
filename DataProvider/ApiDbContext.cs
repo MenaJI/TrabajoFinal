@@ -23,6 +23,14 @@ namespace ApiREST.DataProvider
         public DbSet<TiposDocs> TiposDocs { get; set; }
 
         public DbSet<Condiciones> Condiciones { get; set; }
+
         public DbSet<Aulas> Aulas { get; set; }
+
+        public DbSet<Dias> Dias { get; set; }
+
+        public DbSet<Horarios> Horarios { get; set; }
+
+        public DbSet<Modulos> Modulos { get; set; }
+
     }
 }

@@ -14,7 +14,6 @@ namespace ApiREST.ServicesImp
 
         public List<Generos> GetAll()
         {
-
             return dataProvider.Generos.ToList();
         }
 

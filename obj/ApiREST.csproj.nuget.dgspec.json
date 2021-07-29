@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Repos\\source\\Trabajo Final\\ApiREST\\ApiREST.csproj": {}
+    "C:\\Users\\Braian\\Documents\\03- PROYECTOS\\02- TRABAJO FINAL\\ApiREST\\ApiREST.csproj": {}
   },
   "projects": {
-    "D:\\Repos\\source\\Trabajo Final\\ApiREST\\ApiREST.csproj": {
+    "C:\\Users\\Braian\\Documents\\03- PROYECTOS\\02- TRABAJO FINAL\\ApiREST\\ApiREST.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Repos\\source\\Trabajo Final\\ApiREST\\ApiREST.csproj",
+        "projectUniqueName": "C:\\Users\\Braian\\Documents\\03- PROYECTOS\\02- TRABAJO FINAL\\ApiREST\\ApiREST.csproj",
         "projectName": "ApiREST",
-        "projectPath": "D:\\Repos\\source\\Trabajo Final\\ApiREST\\ApiREST.csproj",
-        "packagesPath": "C:\\Users\\Mena\\.nuget\\packages\\",
-        "outputPath": "D:\\Repos\\source\\Trabajo Final\\ApiREST\\obj\\",
+        "projectPath": "C:\\Users\\Braian\\Documents\\03- PROYECTOS\\02- TRABAJO FINAL\\ApiREST\\ApiREST.csproj",
+        "packagesPath": "C:\\Users\\Braian\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Braian\\Documents\\03- PROYECTOS\\02- TRABAJO FINAL\\ApiREST\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Mena\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Braian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -109,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.205\\RuntimeIdentifierGraph.json"
         }
       }
     }

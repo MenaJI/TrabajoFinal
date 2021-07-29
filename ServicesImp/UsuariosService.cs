@@ -112,7 +112,8 @@ namespace ApiREST.ServicesImp
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.NombreUsuario
+                UserName = model.NombreUsuario,
+                //FechaCreacion = DateTime.Now
             };
 
             var result = await userManager.CreateAsync(usuario, model.Contraseña);

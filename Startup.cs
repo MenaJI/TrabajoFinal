@@ -62,6 +62,10 @@ namespace ApiREST
             services.AddScoped<ITiposDocsService, TiposDocsService>();
             services.AddScoped<ICondicionesService, CondicionesService>();
             services.AddScoped<IAulasService, AulasService>();
+            services.AddScoped<IDiasService, DiasService>();
+            services.AddScoped<IHorariosService, HorariosService>();
+            services.AddScoped<IModulosService, ModulosService>();
+
 
             // Para usar Identity  
             services.AddIdentity<Usuarios, IdentityRole>()
