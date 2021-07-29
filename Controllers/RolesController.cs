@@ -32,6 +32,19 @@ namespace ApiREST.Controllers
             return NoContent();
         }
 
+        [HttpGet("GetByName")]
+        public async Task<IActionResult> GetByNombreRol(RolModel model)
+        {
+            Roles rol = await rolesService.GetByNombreRol(model);
+
+            if (rol != null)
+            {
+                return Ok(rol);
+            }
+
+            return NoContent();
+        }
+
         [HttpPost("RegistrarRol")]
         public async Task<IActionResult> AddItem(RolModel model)
         {

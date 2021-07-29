@@ -9,7 +9,7 @@ namespace ApiREST.Services
     public interface IRolesService
     {
         List<Roles> GetAll();
-        Roles GetByNombreRol(string nombreRol);
+        Task<Roles> GetByNombreRol(RolModel model);
         Task<Response> PostRol(RolModel model);
         void PutRol(Roles rol);
         Response DeleteRol(RolModel model);

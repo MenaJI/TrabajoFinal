@@ -49,9 +49,15 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public Roles GetByNombreRol(string nombreRol)
+        public async Task<Roles> GetByNombreRol(RolModel model)
         {
-            throw new NotImplementedException();
+            var rolExist = await roleManager.FindByNameAsync(model.Nombre);
+            if (rolExist != null)
+            {
+                var rol = iMapper.Map<Roles>(rolExist);
+                return rol;
+            }
+            return null;
         }
 
         public async Task<Response> PostRol(RolModel model)

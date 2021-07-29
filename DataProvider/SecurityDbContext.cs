@@ -15,5 +15,9 @@ namespace ApiREST.DataProvider
             base.OnModelCreating(builder);
         }
 
+        /* DbSets */
+
+        public DbSet<Usuarios> Usuarios { get; set; }
+
     }
 }

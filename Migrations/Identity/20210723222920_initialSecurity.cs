@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ApiREST.Migrations.Identity
 {
-    public partial class InitialCreate : Migration
+    public partial class initialSecurity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
