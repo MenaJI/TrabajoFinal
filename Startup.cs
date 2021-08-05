@@ -65,6 +65,9 @@ namespace ApiREST
             services.AddScoped<IDiasService, DiasService>();
             services.AddScoped<IHorariosService, HorariosService>();
             services.AddScoped<IModulosService, ModulosService>();
+            services.AddScoped<IAlumnosServices,AlumnosService>();
+            services.AddScoped<ICarrerasService,CarrerasService>();
+            services.AddScoped<IInscripcionService,InscripcionService>();
 
 
             // Para usar Identity  
