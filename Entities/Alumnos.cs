@@ -2,16 +2,11 @@ using System.Collections.Generic;
 
 namespace ApiREST.Entities
 {
-    public class Alumnos
+    public class Alumnos : Personas
     {
-
-        public int id {get; set; }
-        public int CertificadoSalud { get; set; }
-
-        public int CertificadoSecundaria { get; set; }
-
-        public int Foto { get; set; }
-
-        public ICollection<InscripcionCarrera> inscripcion { get; set; }
+        public int CertificadoSaludId { get; set; }
+        public int CertificadoSecundariaId { get; set; }
+        public int FotoId { get; set; }
+        public virtual ICollection<InscripcionCarrera> Inscripcion { get; set; }
     }
 }

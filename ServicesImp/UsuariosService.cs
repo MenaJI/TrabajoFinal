@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Linq;
 using AutoMapper;
+using ApiREST.DTOs;
 
 namespace ApiREST.ServicesImp
 {
@@ -54,7 +55,7 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<TokenModel> Login(LoginModel model)
+        public async Task<TokenModel> Login(Login_DTO model)
         {
             var user = await userManager.FindByNameAsync(model.NombreUsuario);
 
@@ -99,7 +100,7 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Response> RegistrarUsuario(RegistroModel model)
+        public async Task<Response> RegistrarUsuario(Registro_DTO model)
         {
             var userExists = await userManager.FindByNameAsync(model.NombreUsuario);
 

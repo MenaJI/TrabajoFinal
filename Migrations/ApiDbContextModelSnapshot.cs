@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ApiREST.Migrations.ApiREST
+namespace ApiREST.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
     partial class ApiDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,61 @@ namespace ApiREST.Migrations.ApiREST
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ApiREST.Entities.Alumnos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Apellido")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CertificadoSaludId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CertificadoSecundariaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_EstadoCivil")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Genero")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Localidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Nacionalidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_TipoDoc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FotoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("NroDocumento")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_EstadoCivil");
+
+                    b.HasIndex("Fk_Genero");
+
+                    b.HasIndex("Fk_Localidad");
+
+                    b.HasIndex("Fk_Nacionalidad");
+
+                    b.HasIndex("Fk_TipoDoc");
+
+                    b.ToTable("Alumno");
+                });
 
             modelBuilder.Entity("ApiREST.Entities.Aulas", b =>
                 {
@@ -35,6 +90,21 @@ namespace ApiREST.Migrations.ApiREST
                     b.HasKey("Id");
 
                     b.ToTable("Aulas");
+                });
+
+            modelBuilder.Entity("ApiREST.Entities.Carreras", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carrera");
                 });
 
             modelBuilder.Entity("ApiREST.Entities.Condiciones", b =>
@@ -112,6 +182,28 @@ namespace ApiREST.Migrations.ApiREST
                     b.ToTable("Horarios");
                 });
 
+            modelBuilder.Entity("ApiREST.Entities.InscripcionCarrera", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AlumnosId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Carrera")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlumnosId");
+
+                    b.HasIndex("Fk_Carrera");
+
+                    b.ToTable("InscripcionCarrera");
+                });
+
             modelBuilder.Entity("ApiREST.Entities.Localidades", b =>
                 {
                     b.Property<int>("Id")
@@ -134,20 +226,20 @@ namespace ApiREST.Migrations.ApiREST
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DiaId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Estado")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("HorarioId")
+                    b.Property<int>("Fk_Dia")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Horario")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiaId");
+                    b.HasIndex("Fk_Dia");
 
-                    b.HasIndex("HorarioId");
+                    b.HasIndex("Fk_Horario");
 
                     b.ToTable("Modulos");
                 });
@@ -182,19 +274,86 @@ namespace ApiREST.Migrations.ApiREST
                     b.ToTable("TiposDocs");
                 });
 
+            modelBuilder.Entity("ApiREST.Entities.Alumnos", b =>
+                {
+                    b.HasOne("ApiREST.Entities.EstadosCiviles", "EstadoCivil")
+                        .WithMany()
+                        .HasForeignKey("Fk_EstadoCivil")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiREST.Entities.Generos", "Genero")
+                        .WithMany()
+                        .HasForeignKey("Fk_Genero")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiREST.Entities.Localidades", "Localidad")
+                        .WithMany()
+                        .HasForeignKey("Fk_Localidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiREST.Entities.Nacionalidades", "Nacionalidad")
+                        .WithMany()
+                        .HasForeignKey("Fk_Nacionalidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiREST.Entities.TiposDocs", "TipoDoc")
+                        .WithMany()
+                        .HasForeignKey("Fk_TipoDoc")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EstadoCivil");
+
+                    b.Navigation("Genero");
+
+                    b.Navigation("Localidad");
+
+                    b.Navigation("Nacionalidad");
+
+                    b.Navigation("TipoDoc");
+                });
+
+            modelBuilder.Entity("ApiREST.Entities.InscripcionCarrera", b =>
+                {
+                    b.HasOne("ApiREST.Entities.Alumnos", null)
+                        .WithMany("Inscripcion")
+                        .HasForeignKey("AlumnosId");
+
+                    b.HasOne("ApiREST.Entities.Carreras", "Carrera")
+                        .WithMany()
+                        .HasForeignKey("Fk_Carrera")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Carrera");
+                });
+
             modelBuilder.Entity("ApiREST.Entities.Modulos", b =>
                 {
                     b.HasOne("ApiREST.Entities.Dias", "Dia")
                         .WithMany()
-                        .HasForeignKey("DiaId");
+                        .HasForeignKey("Fk_Dia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ApiREST.Entities.Horarios", "Horario")
                         .WithMany()
-                        .HasForeignKey("HorarioId");
+                        .HasForeignKey("Fk_Horario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Dia");
 
                     b.Navigation("Horario");
+                });
+
+            modelBuilder.Entity("ApiREST.Entities.Alumnos", b =>
+                {
+                    b.Navigation("Inscripcion");
                 });
 #pragma warning restore 612, 618
         }

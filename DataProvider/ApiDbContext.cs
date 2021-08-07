@@ -32,10 +32,11 @@ namespace ApiREST.DataProvider
 
         public DbSet<Modulos> Modulos { get; set; }
 
-        public DbSet<Alumnos> Alumno {get; set;}
+        public DbSet<Alumnos> Alumno { get; set; }
 
-        public DbSet<Carreras> Carrera {get; set;}
-        public DbSet<InscripcionCarrera> InscripcionCarrera {get; set;}
+        public DbSet<Carreras> Carrera { get; set; }
+
+        public DbSet<InscripcionCarrera> InscripcionCarrera { get; set; }
 
     }
 }

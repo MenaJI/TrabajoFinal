@@ -1,15 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiREST.Models
+namespace ApiREST.DTOs
 {
-    public class RegistroModel
+    public class Login_DTO
     {
         [Required(ErrorMessage = "User Name is required")]
         public string NombreUsuario { get; set; }
-
-        [EmailAddress]
-        [Required(ErrorMessage = "Email is required")]
-        public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         public string Contraseña { get; set; }

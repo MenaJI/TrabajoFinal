@@ -7,6 +7,7 @@ using ApiREST.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using ApiREST.DTOs;
 
 namespace ApiREST.Controllers
 {
@@ -33,7 +34,7 @@ namespace ApiREST.Controllers
         }
 
         [HttpGet("GetByName")]
-        public async Task<IActionResult> GetByNombreRol(RolModel model)
+        public async Task<IActionResult> GetByNombreRol(Rol_DTO model)
         {
             Roles rol = await rolesService.GetByNombreRol(model);
 
@@ -46,7 +47,7 @@ namespace ApiREST.Controllers
         }
 
         [HttpPost("RegistrarRol")]
-        public async Task<IActionResult> AddItem(RolModel model)
+        public async Task<IActionResult> AddItem(Rol_DTO model)
         {
             var result = await rolesService.PostRol(model);
 
@@ -54,7 +55,7 @@ namespace ApiREST.Controllers
         }
 
         [HttpDelete("BorrarRol")]
-        public IActionResult RemoveItem(RolModel model)
+        public IActionResult RemoveItem(Rol_DTO model)
         {
             var result = rolesService.DeleteRol(model);
 

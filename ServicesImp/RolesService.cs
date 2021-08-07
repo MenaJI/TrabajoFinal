@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiREST.DataProvider;
+using ApiREST.DTOs;
 using ApiREST.Entities;
 using ApiREST.Models;
 using ApiREST.Services;
@@ -22,7 +23,7 @@ namespace ApiREST.ServicesImp
             iMapper = _iMapper;
         }
 
-        public Response DeleteRol(RolModel model)
+        public Response DeleteRol(Rol_DTO model)
         {
             var rol = roleManager.Roles.FirstOrDefault(x => x.Name == model.Nombre);
 
@@ -49,7 +50,7 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Roles> GetByNombreRol(RolModel model)
+        public async Task<Roles> GetByNombreRol(Rol_DTO model)
         {
             var rolExist = await roleManager.FindByNameAsync(model.Nombre);
             if (rolExist != null)
@@ -60,7 +61,7 @@ namespace ApiREST.ServicesImp
             return null;
         }
 
-        public async Task<Response> PostRol(RolModel model)
+        public async Task<Response> PostRol(Rol_DTO model)
         {
             var rolExist = await roleManager.FindByNameAsync(model.Nombre);
 

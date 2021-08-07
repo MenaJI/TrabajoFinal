@@ -5,6 +5,5 @@ namespace ApiREST.Entities
 {
     public class Roles : IdentityRole
     {
-
     }
 }
