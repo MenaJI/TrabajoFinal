@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class LocalidadesService : ILocalidadesService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public LocalidadesService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public LocalidadesService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Localidades> GetAll()
         {

@@ -43,7 +43,7 @@ namespace ApiREST
             });
 
             // DbContext de la Api
-            services.AddDbContext<ApiDbContext>(opt =>
+            services.AddDbContext<SecurityDbContext>(opt =>
             opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // DbContext de Identity
@@ -52,7 +52,7 @@ namespace ApiREST
 
             // Inyección de dependencia.
 
-            services.AddScoped<ApiDbContext, ApiDbContext>();
+            services.AddScoped<SecurityDbContext, SecurityDbContext>();
             services.AddScoped<IRolesService, RolesService>();
             services.AddScoped<IUsuariosService, UsuariosService>();
             services.AddScoped<IEstadosCivilesService, EstadosCivilesService>();
@@ -65,9 +65,9 @@ namespace ApiREST
             services.AddScoped<IDiasService, DiasService>();
             services.AddScoped<IHorariosService, HorariosService>();
             services.AddScoped<IModulosService, ModulosService>();
-            services.AddScoped<IAlumnosServices,AlumnosService>();
-            services.AddScoped<ICarrerasService,CarrerasService>();
-            services.AddScoped<IInscripcionService,InscripcionService>();
+            services.AddScoped<IAlumnosServices, AlumnosService>();
+            services.AddScoped<ICarrerasService, CarrerasService>();
+            services.AddScoped<IInscripcionService, InscripcionService>();
 
 
             // Para usar Identity  

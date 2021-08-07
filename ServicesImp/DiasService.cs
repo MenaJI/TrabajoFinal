@@ -7,9 +7,9 @@ namespace ApiREST.ServicesImp
 {
     public class DiasService : IDiasService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public DiasService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public DiasService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Dias> GetAll()
         {

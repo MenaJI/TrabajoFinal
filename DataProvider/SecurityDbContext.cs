@@ -27,8 +27,8 @@ namespace ApiREST.DataProvider
         public DbSet<Dias> Dias { get; set; }
         public DbSet<Horarios> Horarios { get; set; }
         public DbSet<Modulos> Modulos { get; set; }
-        public DbSet<Alumnos> Alumno { get; set; }
-        public DbSet<Carreras> Carrera { get; set; }
-        public DbSet<InscripcionCarrera> InscripcionCarrera { get; set; }
+        public DbSet<Alumnos> Alumnos { get; set; }
+        public DbSet<Carreras> Carreras { get; set; }
+        public DbSet<InscripcionCarrera> InscripcionCarreras { get; set; }
     }
 }

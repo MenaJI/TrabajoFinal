@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class TiposDocsService : ITiposDocsService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public TiposDocsService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public TiposDocsService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<TiposDocs> GetAll()
         {

@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class ModulosService : IModulosService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public ModulosService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public ModulosService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Modulos> GetAll()
         {

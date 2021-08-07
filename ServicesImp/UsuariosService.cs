@@ -32,14 +32,13 @@ namespace ApiREST.ServicesImp
             iMapper = _iMapper;
         }
 
-        public void BorrarUsuario(Usuarios usuario)
+        public void BorrarUsuario(Usuario_DTO usuario)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void EditarUsuario(Usuarios usuario)
-        {
-            throw new System.NotImplementedException();
+            var result = userManager.FindByNameAsync(usuario.NombreUsuario);
+            if (result != null)
+            {
+                userManager.DeleteAsync(iMapper.Map<Usuarios>(result));
+            }
         }
 
         public List<Usuarios> GetAll()
@@ -90,8 +89,7 @@ namespace ApiREST.ServicesImp
                 // Se crea el mensaje de respuesta.
                 result = new TokenModel
                 {
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Expiracion = token.ValidTo,
+                    Token = new JwtSecurityTokenHandler().WriteToken(token)
                 };
 
                 return result;
@@ -114,7 +112,6 @@ namespace ApiREST.ServicesImp
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.NombreUsuario,
-                //FechaCreacion = DateTime.Now
             };
 
             var result = await userManager.CreateAsync(usuario, model.Contraseña);
@@ -125,11 +122,6 @@ namespace ApiREST.ServicesImp
             }
 
             return new Response { Status = "Success", Message = "El usuario fue creado con exito." };
-        }
-
-        public void SaveChanges()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

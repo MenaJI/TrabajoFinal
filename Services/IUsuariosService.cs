@@ -11,8 +11,6 @@ namespace ApiREST.Services
         List<Usuarios> GetAll();
         Task<TokenModel> Login(Login_DTO model);
         Task<Response> RegistrarUsuario(Registro_DTO model);
-        void EditarUsuario(Usuarios usuario);
-        void BorrarUsuario(Usuarios usuario);
-        void SaveChanges();
+        void BorrarUsuario(Usuario_DTO usuario);
     }
 }

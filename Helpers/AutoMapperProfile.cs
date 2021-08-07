@@ -10,6 +10,7 @@ namespace ApiREST.Helpers
         {
             CreateMap<IdentityRole, Roles>();
             CreateMap<IdentityUser, Usuarios>();
+            CreateMap<Usuarios, IdentityUser>();
         }
     }
 }

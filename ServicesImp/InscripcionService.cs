@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
 using ApiREST.Services;
@@ -7,34 +8,43 @@ namespace ApiREST.ServicesImp
 {
     public class InscripcionService : IInscripcionService
     {
-        private readonly ApiDbContext dataProvider;
-        public InscripcionService(ApiDbContext dataProvider_){
+        private readonly SecurityDbContext dataProvider;
+        public InscripcionService(SecurityDbContext dataProvider_)
+        {
             dataProvider = dataProvider_;
         }
 
         public void DeleteInscripcion(InscripcionCarrera inscripcion)
         {
-            throw new System.NotImplementedException();
+            var result = dataProvider.InscripcionCarreras.FirstOrDefault(i => i.Id == inscripcion.Id);
+            if (result != null)
+            {
+                dataProvider.InscripcionCarreras.Remove(result);
+            }
         }
 
         public List<InscripcionCarrera> GetAll()
         {
-            throw new System.NotImplementedException();
+            return dataProvider.InscripcionCarreras.ToList();
         }
 
         public void PostInscripcion(InscripcionCarrera inscripcionCarrera)
         {
-            throw new System.NotImplementedException();
+            dataProvider.Remove(inscripcionCarrera);
         }
 
         public void PutInscripcion(InscripcionCarrera inscripcionCarrera)
         {
-            throw new System.NotImplementedException();
+            var result = dataProvider.InscripcionCarreras.FirstOrDefault(i => i.Id == inscripcionCarrera.Id);
+            if (result != null)
+            {
+                result = inscripcionCarrera;
+            }
         }
 
         public void SaveChanges()
         {
-            throw new System.NotImplementedException();
+            dataProvider.SaveChanges();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class AulasService : IAulasService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public AulasService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public AulasService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Aulas> GetAll()
         {

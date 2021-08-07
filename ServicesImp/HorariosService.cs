@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class HorariosService : IHorariosService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public HorariosService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public HorariosService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Horarios> GetAll()
         {

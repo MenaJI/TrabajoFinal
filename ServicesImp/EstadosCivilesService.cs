@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class EstadosCivilesService : IEstadosCivilesService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public EstadosCivilesService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public EstadosCivilesService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<EstadosCiviles> GetAll()
         {

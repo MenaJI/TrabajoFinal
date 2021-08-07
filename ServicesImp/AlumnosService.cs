@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
 using ApiREST.Services;
@@ -7,34 +8,47 @@ namespace ApiREST.ServicesImp
 {
     public class AlumnosService : IAlumnosServices
     {
-        private readonly ApiDbContext dataProvider;
-        public AlumnosService(ApiDbContext dataProvider_){
+        private readonly SecurityDbContext dataProvider;
+        public AlumnosService(SecurityDbContext dataProvider_)
+        {
             dataProvider = dataProvider_;
         }
 
         public void DeleteAlumnos(Alumnos alumnos)
         {
-            throw new System.NotImplementedException();
+            var alumno = dataProvider.Alumnos.FirstOrDefault(a => a.Id == alumnos.Id);
+            if (alumno != null)
+            {
+                dataProvider.Alumnos.Remove(alumnos);
+            }
         }
 
         public List<Alumnos> GetAll()
         {
-            throw new System.NotImplementedException();
+            return dataProvider.Alumnos.ToList();
         }
 
         public void PostAlumnos(Alumnos alumnos)
         {
-            throw new System.NotImplementedException();
+            var result = dataProvider.Alumnos.FirstOrDefault(a => a.Id == alumnos.Id);
+            if (result == null)
+            {
+                dataProvider.Alumnos.Add(result);
+            }
         }
 
         public void PutAlumnos(Alumnos alumnos)
         {
-            throw new System.NotImplementedException();
+            var result = dataProvider.Alumnos.FirstOrDefault(a => a.Id == alumnos.Id);
+            if (result != null)
+            {
+                result = alumnos;
+            }
         }
 
         public void SaveChanges()
         {
-            throw new System.NotImplementedException();
+            dataProvider.SaveChanges();
         }
     }
 }

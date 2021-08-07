@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class CondicionesService : ICondicionesService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public CondicionesService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public CondicionesService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Condiciones> GetAll()
         {

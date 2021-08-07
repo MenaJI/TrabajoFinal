@@ -8,9 +8,9 @@ namespace ApiREST.ServicesImp
 {
     public class GenerosService : IGenerosService
     {
-        public ApiDbContext dataProvider;
+        public SecurityDbContext dataProvider;
 
-        public GenerosService(ApiDbContext appDbContext) { dataProvider = appDbContext; }
+        public GenerosService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
 
         public List<Generos> GetAll()
         {
