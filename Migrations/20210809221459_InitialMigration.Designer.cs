@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiREST.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    [Migration("20210808171730_InitialMigration")]
+    [Migration("20210809221459_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
