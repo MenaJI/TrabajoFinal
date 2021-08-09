@@ -56,11 +56,11 @@ namespace ApiREST.ServicesImp
 
         public async Task<TokenModel> Login(Login_DTO model)
         {
-            var user = await userManager.FindByNameAsync(model.NombreUsuario);
+            var user = await userManager.FindByNameAsync(model.nombreusuario);
 
             TokenModel result = null;
 
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Contraseña))
+            if (user != null && await userManager.CheckPasswordAsync(user, model.contraseña))
             {
                 // Solicita el rol del usuario.
                 var userRoles = await userManager.GetRolesAsync(user);

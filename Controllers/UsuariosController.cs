@@ -25,7 +25,7 @@ namespace ApiREST.Controllers
             return Ok(usuariosService.GetAll());
         }
 
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] Login_DTO model)
         {
 

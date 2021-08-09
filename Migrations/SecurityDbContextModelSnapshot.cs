@@ -4,16 +4,14 @@ using ApiREST.DataProvider;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ApiREST.Migrations.SecurityDb
+namespace ApiREST.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    [Migration("20210807172620_SecondMigration")]
-    partial class SecondMigration
+    partial class SecurityDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +76,7 @@ namespace ApiREST.Migrations.SecurityDb
 
                     b.HasIndex("Fk_Usuario");
 
-                    b.ToTable("Alumno");
+                    b.ToTable("Alumnos");
                 });
 
             modelBuilder.Entity("ApiREST.Entities.Aulas", b =>
@@ -111,7 +109,7 @@ namespace ApiREST.Migrations.SecurityDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carrera");
+                    b.ToTable("Carreras");
                 });
 
             modelBuilder.Entity("ApiREST.Entities.Condiciones", b =>
@@ -208,7 +206,7 @@ namespace ApiREST.Migrations.SecurityDb
 
                     b.HasIndex("Fk_Carrera");
 
-                    b.ToTable("InscripcionCarrera");
+                    b.ToTable("InscripcionCarreras");
                 });
 
             modelBuilder.Entity("ApiREST.Entities.Localidades", b =>

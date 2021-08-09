@@ -42,11 +42,7 @@ namespace ApiREST
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiREST", Version = "v1" });
             });
 
-            // DbContext de la Api
-            services.AddDbContext<SecurityDbContext>(opt =>
-            opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            // DbContext de Identity
+            // DbContext de la Api (Entities y Identity)
             services.AddDbContext<SecurityDbContext>(opt =>
             opt.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
@@ -98,11 +94,16 @@ namespace ApiREST
 
             // Para usar el AutoMapper.
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // CORS
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

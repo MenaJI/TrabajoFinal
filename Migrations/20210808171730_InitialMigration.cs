@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ApiREST.Migrations.SecurityDb
+namespace ApiREST.Migrations
 {
     public partial class InitialMigration : Migration
     {
@@ -61,7 +61,7 @@ namespace ApiREST.Migrations.SecurityDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carrera",
+                name: "Carreras",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -70,7 +70,7 @@ namespace ApiREST.Migrations.SecurityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carrera", x => x.Id);
+                    table.PrimaryKey("PK_Carreras", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -311,7 +311,7 @@ namespace ApiREST.Migrations.SecurityDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Alumno",
+                name: "Alumnos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -326,37 +326,44 @@ namespace ApiREST.Migrations.SecurityDb
                     Fk_Genero = table.Column<int>(type: "int", nullable: false),
                     Fk_Localidad = table.Column<int>(type: "int", nullable: false),
                     Fk_Nacionalidad = table.Column<int>(type: "int", nullable: false),
-                    Fk_EstadoCivil = table.Column<int>(type: "int", nullable: false)
+                    Fk_EstadoCivil = table.Column<int>(type: "int", nullable: false),
+                    Fk_Usuario = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alumno", x => x.Id);
+                    table.PrimaryKey("PK_Alumnos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Alumno_EstadosCiviles_Fk_EstadoCivil",
+                        name: "FK_Alumnos_AspNetUsers_Fk_Usuario",
+                        column: x => x.Fk_Usuario,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Alumnos_EstadosCiviles_Fk_EstadoCivil",
                         column: x => x.Fk_EstadoCivil,
                         principalTable: "EstadosCiviles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Alumno_Generos_Fk_Genero",
+                        name: "FK_Alumnos_Generos_Fk_Genero",
                         column: x => x.Fk_Genero,
                         principalTable: "Generos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Alumno_Localidades_Fk_Localidad",
+                        name: "FK_Alumnos_Localidades_Fk_Localidad",
                         column: x => x.Fk_Localidad,
                         principalTable: "Localidades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Alumno_Nacionalidades_Fk_Nacionalidad",
+                        name: "FK_Alumnos_Nacionalidades_Fk_Nacionalidad",
                         column: x => x.Fk_Nacionalidad,
                         principalTable: "Nacionalidades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Alumno_TiposDocs_Fk_TipoDoc",
+                        name: "FK_Alumnos_TiposDocs_Fk_TipoDoc",
                         column: x => x.Fk_TipoDoc,
                         principalTable: "TiposDocs",
                         principalColumn: "Id",
@@ -364,7 +371,7 @@ namespace ApiREST.Migrations.SecurityDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "InscripcionCarrera",
+                name: "InscripcionCarreras",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -374,45 +381,50 @@ namespace ApiREST.Migrations.SecurityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InscripcionCarrera", x => x.Id);
+                    table.PrimaryKey("PK_InscripcionCarreras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InscripcionCarrera_Alumno_AlumnosId",
+                        name: "FK_InscripcionCarreras_Alumnos_AlumnosId",
                         column: x => x.AlumnosId,
-                        principalTable: "Alumno",
+                        principalTable: "Alumnos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_InscripcionCarrera_Carrera_Fk_Carrera",
+                        name: "FK_InscripcionCarreras_Carreras_Fk_Carrera",
                         column: x => x.Fk_Carrera,
-                        principalTable: "Carrera",
+                        principalTable: "Carreras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alumno_Fk_EstadoCivil",
-                table: "Alumno",
+                name: "IX_Alumnos_Fk_EstadoCivil",
+                table: "Alumnos",
                 column: "Fk_EstadoCivil");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alumno_Fk_Genero",
-                table: "Alumno",
+                name: "IX_Alumnos_Fk_Genero",
+                table: "Alumnos",
                 column: "Fk_Genero");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alumno_Fk_Localidad",
-                table: "Alumno",
+                name: "IX_Alumnos_Fk_Localidad",
+                table: "Alumnos",
                 column: "Fk_Localidad");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alumno_Fk_Nacionalidad",
-                table: "Alumno",
+                name: "IX_Alumnos_Fk_Nacionalidad",
+                table: "Alumnos",
                 column: "Fk_Nacionalidad");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alumno_Fk_TipoDoc",
-                table: "Alumno",
+                name: "IX_Alumnos_Fk_TipoDoc",
+                table: "Alumnos",
                 column: "Fk_TipoDoc");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Alumnos_Fk_Usuario",
+                table: "Alumnos",
+                column: "Fk_Usuario");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -454,13 +466,13 @@ namespace ApiREST.Migrations.SecurityDb
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InscripcionCarrera_AlumnosId",
-                table: "InscripcionCarrera",
+                name: "IX_InscripcionCarreras_AlumnosId",
+                table: "InscripcionCarreras",
                 column: "AlumnosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InscripcionCarrera_Fk_Carrera",
-                table: "InscripcionCarrera",
+                name: "IX_InscripcionCarreras_Fk_Carrera",
+                table: "InscripcionCarreras",
                 column: "Fk_Carrera");
 
             migrationBuilder.CreateIndex(
@@ -498,7 +510,7 @@ namespace ApiREST.Migrations.SecurityDb
                 name: "Condiciones");
 
             migrationBuilder.DropTable(
-                name: "InscripcionCarrera");
+                name: "InscripcionCarreras");
 
             migrationBuilder.DropTable(
                 name: "Modulos");
@@ -507,19 +519,19 @@ namespace ApiREST.Migrations.SecurityDb
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Alumnos");
 
             migrationBuilder.DropTable(
-                name: "Alumno");
-
-            migrationBuilder.DropTable(
-                name: "Carrera");
+                name: "Carreras");
 
             migrationBuilder.DropTable(
                 name: "Dias");
 
             migrationBuilder.DropTable(
                 name: "Horarios");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "EstadosCiviles");
