@@ -24,8 +24,10 @@ namespace ApiREST.Entities
 
         public int Fk_Nacionalidad { get; set; }
         [ForeignKey("Fk_Nacionalidad")] public Nacionalidades Nacionalidad { get; set; }
+
         public int Fk_EstadoCivil { get; set; }
         [ForeignKey("Fk_EstadoCivil")] public EstadosCiviles EstadoCivil { get; set; }
+        
         public string Fk_Usuario { get; set; }
         [ForeignKey("Fk_Usuario")] public Usuarios Usuario { get; set; }
     }
