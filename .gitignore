@@ -1,0 +1,4 @@
+# Ignora la carpeta bin
+/bin
+/obj
+appsettings.Development
