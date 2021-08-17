@@ -30,8 +30,6 @@ namespace ApiRest.Entities
 
         public virtual ICollection<Materias> Correlativas { get; set; }
 
-        public virtual ICollection<Modulos> Modulos { get; set; }
-
 
 
 
