@@ -13,7 +13,7 @@ namespace ApiREST.Services
         Task<Roles> GetByNombreRol(Rol_DTO model);
         Task<Response> PostRol(Rol_DTO model);
         void PutRol(Roles rol);
-        Response DeleteRol(Rol_DTO model);
+        Response DeleteRol(string model);
         void SaveChanges();
     }
 }

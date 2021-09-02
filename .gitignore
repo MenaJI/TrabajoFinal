@@ -1,4 +1,6 @@
 # Ignora la carpeta bin
-/bin
-/obj
-appsettings.Development
+.vscode
+bin
+Migrations
+obj
+appsettings.Development.json

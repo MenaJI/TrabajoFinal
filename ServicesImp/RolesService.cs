@@ -23,9 +23,9 @@ namespace ApiREST.ServicesImp
             iMapper = _iMapper;
         }
 
-        public Response DeleteRol(Rol_DTO model)
+        public Response DeleteRol(string model)
         {
-            var rol = roleManager.Roles.FirstOrDefault(x => x.Name == model.Nombre);
+            var rol = roleManager.Roles.FirstOrDefault(x => x.Name == model);
 
             if (rol != null)
             {
@@ -34,7 +34,7 @@ namespace ApiREST.ServicesImp
                 return new Response { Status = "Success", Message = "El rol fue eliminado correctamente." };
             }
 
-            return new Response { Status = "Error", Message = $"No se a podido eliminar el rol {model.Nombre}" };
+            return new Response { Status = "Error", Message = $"No se a podido eliminar el rol {model}" };
         }
 
         public List<Roles> GetAll()

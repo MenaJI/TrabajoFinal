@@ -13,7 +13,7 @@ namespace ApiREST.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class RolesController : ControllerBase
     {
         private IRolesService rolesService;
@@ -55,7 +55,7 @@ namespace ApiREST.Controllers
         }
 
         [HttpDelete("BorrarRol")]
-        public IActionResult RemoveItem(Rol_DTO model)
+        public IActionResult RemoveItem(string model)
         {
             var result = rolesService.DeleteRol(model);
 
