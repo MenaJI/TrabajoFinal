@@ -1,5 +1,4 @@
 # Ignora la carpeta bin
-.vscode
 bin
 Migrations
 obj

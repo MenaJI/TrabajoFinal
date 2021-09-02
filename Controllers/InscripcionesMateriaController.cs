@@ -7,7 +7,7 @@ namespace ApiREST.Controllers
 {
     [ApiController]
     [Route("api/{controller}")]
-    public class InscripcionesMateriaController
+    public class InscripcionesMateriaController : ControllerBase
     {
         private IInscripcionesMateriaService InscripcionMateriaService;
 
@@ -19,10 +19,7 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-
-            //var result = InscripcionMateriaService.GetAll();
-
-            return new OkResult();
+            return Ok();
         }
     }
 }
