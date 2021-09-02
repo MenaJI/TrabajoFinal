@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ApiRest.Entities
 {
-    public class InscripcionMateria
+    public class InscripcionMaterias
     {
         public int id { get; set; }
         public int fecha { get; set; }
