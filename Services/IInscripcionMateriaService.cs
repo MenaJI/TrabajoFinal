@@ -4,7 +4,7 @@ using ApiREST.Entities;
 
 namespace ApiREST.Services
 {
-    public interface IInscripcionMateriaService
+    public interface IInscripcionMateriasService
     {
         List<InscripcionMateria> GetAll();
         void PostInscripcionMateria ( InscripcionMateria inscripcionMateria);

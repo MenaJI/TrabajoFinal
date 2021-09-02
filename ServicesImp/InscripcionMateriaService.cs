@@ -6,7 +6,7 @@ using ApiREST.Services;
 
 namespace ApiREST.ServicesImp
 {
-    public class InscripcionMateria : IInscripcionMateriaService
+    public class InscripcionMaterias : IInscripcionMateriasService
     {
         private readonly SecurityDbContext dataProvider;
         public InscripcionMateriaService(SecurityDbContext dataProvider_)
