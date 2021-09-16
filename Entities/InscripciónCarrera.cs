@@ -6,8 +6,8 @@ namespace ApiREST.Entities
     public class InscripcionCarrera
     {
         public int Id { get; set; }
+        [ForeignKey("Carrera")]
         public int Fk_Carrera { get; set; }
-        [ForeignKey("Fk_Carrera")]
         public Carreras Carrera { get; set; }
     }
 }

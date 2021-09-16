@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
-using ApiREST.Entities;
 
-namespace ApiRest.Entities
+namespace ApiREST.Entities
 {
     public class Materias
     {
@@ -16,25 +15,17 @@ namespace ApiRest.Entities
 
         public int HorasCatAnu { get; set; }
 
-        [ForeignKey("Fk_Anio")] public int Fk_Anio { get; set; }
+        [ForeignKey("Anio")] public int Fk_Anio { get; set; }
         public Anios Anio { get; set; }
 
-        [ForeignKey("Fk_Regimen")] public int Fk_Regimen { get; set; }
+        [ForeignKey("Regimen")] public int Fk_Regimen { get; set; }
         public Regimenes Regimen { get; set; }
 
-        [ForeignKey("Fk_Campo")] public int Fk_Campo { get; set; }
+        [ForeignKey("Campo")] public int Fk_Campo { get; set; }
         public Campos Campo { get; set; }
 
-        [ForeignKey("Fk_Carrera")] public int Fk_Carrera { get; set; }
+        [ForeignKey("Carrera")] public int Fk_Carrera { get; set; }
         public Carreras Carrera { get; set; }
-
         public virtual ICollection<Materias> Correlativas { get; set; }
-
-
-
-
-
-
-
     }
 }

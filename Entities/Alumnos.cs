@@ -7,6 +7,6 @@ namespace ApiREST.Entities
         public int CertificadoSaludId { get; set; }
         public int CertificadoSecundariaId { get; set; }
         public int FotoId { get; set; }
-        public virtual ICollection<InscripcionCarrera> Inscripcion { get; set; }
+        public virtual ICollection<InscripcionCarrera> InscripcionCarreras { get; set; }
     }
 }

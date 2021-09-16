@@ -1,3 +1,4 @@
+using System;
 using ApiREST.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ namespace ApiREST.DataProvider
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<InscripcionesMateria>().HasOne(i => i.Materias).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
+
         }
 
         /* DbSets */
@@ -33,6 +36,7 @@ namespace ApiREST.DataProvider
         public DbSet<Anios> Anios { get; set; }
         public DbSet<Regimenes> Regimenes { get; set; }
         public DbSet<Campos> Campos { get; set; }
+        public DbSet<Cursos> Cursos { get; set; }
         public DbSet<CondicionesCurso> CondicionesCurso { get; set; }
         public DbSet<Formatos> Formatos { get; set; }
         public DbSet<InscripcionesMateria> InscripcionesMateria { get; set; }

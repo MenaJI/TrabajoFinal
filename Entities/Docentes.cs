@@ -1,6 +1,6 @@
 using ApiREST.Entities;
 
-namespace ApiRest.Entities
+namespace ApiREST.Entities
 {
     public class Docentes : Personas
     {
