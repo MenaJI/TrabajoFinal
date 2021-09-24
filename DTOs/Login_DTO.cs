@@ -4,10 +4,10 @@ namespace ApiREST.DTOs
 {
     public class Login_DTO
     {
-        [Required(ErrorMessage = "User Name is required")]
+        [Required(ErrorMessage = "El nombre de usuario es requerido")]
         public string nombreusuario { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "La contraseña es requerida")]
         public string contraseña { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace ApiREST.Controllers
             diasService.PutDias(dia);
             diasService.SaveChanges();
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]
