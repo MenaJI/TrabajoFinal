@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiREST.DTOs;
 using ApiREST.Entities;
+using ApiREST.Entities.DTOs;
 using ApiREST.Models;
 
 namespace ApiREST.Services

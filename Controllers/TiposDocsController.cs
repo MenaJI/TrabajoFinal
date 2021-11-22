@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<TiposDocs>> GetAll()
         {
-            return Ok(tiposDocsService.GetAll());
+            return Ok(tiposDocsService.Get());
         }
 
         [HttpGet("GetTipoDoc/{id:int}")]
         public ActionResult<TiposDocs> GetById(int id)
         {
-            TiposDocs result = tiposDocsService.GetById(id);
+            TiposDocs result = tiposDocsService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] TiposDocs tipoDoc)
         {
-            tiposDocsService.PostTiposDocs(tipoDoc);
-            tiposDocsService.SaveChanges();
+            tiposDocsService.Insert(tipoDoc);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(TiposDocs tipoDoc)
         {
-            tiposDocsService.PutTiposDocs(tipoDoc);
-            tiposDocsService.SaveChanges();
+            tiposDocsService.Update(tipoDoc);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(TiposDocs tipoDoc)
         {
-            tiposDocsService.DeleteTiposDocs(tipoDoc);
-            tiposDocsService.SaveChanges();
+            tiposDocsService.Delete(tipoDoc);
 
             return Ok();
         }

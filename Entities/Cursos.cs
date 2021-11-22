@@ -6,10 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApiREST.Entities
 {
-    public class Cursos
+    public class Cursos : BaseEntity
     {
-        public int Id { get; set; }
-
         public string Descrip { get; set; }
 
         public bool Activa { get; set; }

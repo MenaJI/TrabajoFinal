@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Horarios>> GetAll()
         {
-            return Ok(horariosService.GetAll());
+            return Ok(horariosService.Get());
         }
 
         [HttpGet("GetHorario/{id:int}")]
         public ActionResult<Horarios> GetById(int id)
         {
-            Horarios result = horariosService.GetById(id);
+            Horarios result = horariosService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Horarios horario)
         {
-            horariosService.PostHorarios(horario);
-            horariosService.SaveChanges();
+            horariosService.Insert(horario);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Horarios horario)
         {
-            horariosService.PutHorarios(horario);
-            horariosService.SaveChanges();
+            horariosService.Update(horario);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Horarios horario)
         {
-            horariosService.DeleteHorarios(horario);
-            horariosService.SaveChanges();
+            horariosService.Delete(horario);
 
             return Ok();
         }

@@ -1,8 +1,7 @@
 namespace ApiREST.Entities
 {
-    public class Nacionalidades
+    public class Nacionalidades : BaseEntity
     {
-        public int Id { get; set; }
         public string Descrip { get; set; }
     }
 }

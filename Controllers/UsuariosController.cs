@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using ApiREST.DTOs;
-using ApiREST.Models;
+using ApiREST.Entities.DTOs;
 using ApiREST.Services;
-using ApiREST.ServicesImp;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiREST.Controllers

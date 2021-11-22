@@ -19,7 +19,7 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            return Ok(InscripcionMateriaService.GetAll());
+            return Ok(InscripcionMateriaService.Get());
         }
     }
 }

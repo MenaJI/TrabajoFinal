@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Localidades>> GetAll()
         {
-            return Ok(localidadesService.GetAll());
+            return Ok(localidadesService.Get());
         }
 
         [HttpGet("GetLocalidad/{id:int}")]
         public ActionResult<Localidades> GetById(int id)
         {
-            Localidades result = localidadesService.GetById(id);
+            Localidades result = localidadesService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Localidades localidad)
         {
-            localidadesService.PostLocalidades(localidad);
-            localidadesService.SaveChanges();
+            localidadesService.Insert(localidad);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Localidades localidad)
         {
-            localidadesService.PutLocalidades(localidad);
-            localidadesService.SaveChanges();
+            localidadesService.Insert(localidad);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Localidades localidad)
         {
-            localidadesService.DeleteLocalidades(localidad);
-            localidadesService.SaveChanges();
+            localidadesService.Delete(localidad);
 
             return Ok();
         }

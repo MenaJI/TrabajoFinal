@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Roles>> GetAll()
         {
-            return Ok(estadosCivilesServices.GetAll());
+            return Ok(estadosCivilesServices.Get());
         }
 
         [HttpGet("GetEstadoCivil/{id:int}")]
         public ActionResult<Roles> GetById(int id)
         {
-            EstadosCiviles result = estadosCivilesServices.GetById(id);
+            EstadosCiviles result = estadosCivilesServices.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] EstadosCiviles estadoCivil)
         {
-            estadosCivilesServices.PostEstadosCiviles(estadoCivil);
-            estadosCivilesServices.SaveChanges();
+            estadosCivilesServices.Insert(estadoCivil);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(EstadosCiviles estadoCivil)
         {
-            estadosCivilesServices.PutEstadosCiviles(estadoCivil);
-            estadosCivilesServices.SaveChanges();
+            estadosCivilesServices.Update(estadoCivil);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(EstadosCiviles estadoCivil)
         {
-            estadosCivilesServices.DeleteEstadosCiviles(estadoCivil);
-            estadosCivilesServices.SaveChanges();
+            estadosCivilesServices.Delete(estadoCivil);
 
             return Ok();
         }

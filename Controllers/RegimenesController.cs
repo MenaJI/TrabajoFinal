@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Regimenes>> GetAll()
         {
-            return Ok(regimenesService.GetAll());
+            return Ok(regimenesService.Get());
         }
 
         [HttpGet("GetHorario/{id:int}")]
         public ActionResult<Regimenes> GetById(int id)
         {
-            Regimenes result = regimenesService.GetById(id);
+            Regimenes result = regimenesService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Regimenes regimen)
         {
-            regimenesService.PostRegimenes(regimen);
-            regimenesService.SaveChanges();
+            regimenesService.Insert(regimen);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Regimenes regimen)
         {
-            regimenesService.PutRegimenes(regimen);
-            regimenesService.SaveChanges();
+            regimenesService.Update(regimen);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Regimenes regimen)
         {
-            regimenesService.DeleteRegimenes(regimen);
-            regimenesService.SaveChanges();
+            regimenesService.Delete(regimen);
 
             return Ok();
         }

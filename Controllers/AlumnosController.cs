@@ -25,7 +25,7 @@ namespace ApiREST.Controllers
         public IActionResult GetAll()
         {
 
-            var result = alumnosServices.GetAll();
+            var result = alumnosServices.Get();
 
             return Ok(result);
         }
@@ -33,7 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public IActionResult AddItem(Alumnos alumno)
         {
-            alumnosServices.PostAlumnos(alumno);
+            alumnosServices.Insert(alumno);
             return Ok();
         }
     };

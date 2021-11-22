@@ -1,8 +1,7 @@
 namespace ApiREST.Entities
 {
-    public class Condiciones
+    public class Condiciones : BaseEntity
     {
-        public int Id { get; set; }
         public string Descrip { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 namespace ApiREST.Entities
 {
-    public class Localidades
+    public class Localidades : BaseEntity
     {
-        public int Id { get; set; }
         public string Descrip { get; set; }
     }
 }

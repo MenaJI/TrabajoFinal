@@ -6,11 +6,11 @@ using ApiREST.Services;
 
 namespace ApiREST.ServicesImp
 {
-    public class CarrerasService : BaseServicesImp<Carreras>, ICarrerasService
+    public class InscripcionCarreraService : BaseServicesImp<InscripcionCarrera>, IInscripcionCarreraService
     {
         private readonly SecurityDbContext dataProvider;
 
-        public CarrerasService(SecurityDbContext context) : base(context)
+        public InscripcionCarreraService(SecurityDbContext context) : base(context)
         {
             dataProvider = context;
         }

@@ -7,7 +7,7 @@ using ApiREST.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using ApiREST.DTOs;
+using ApiREST.Entities.DTOs;
 
 namespace ApiREST.Controllers
 {

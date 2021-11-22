@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Linq;
 using AutoMapper;
-using ApiREST.DTOs;
+using ApiREST.Entities.DTOs;
 
 namespace ApiREST.ServicesImp
 {

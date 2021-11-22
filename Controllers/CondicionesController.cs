@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Condiciones>> GetAll()
         {
-            return Ok(condicionesService.GetAll());
+            return Ok(condicionesService.Get());
         }
 
         [HttpGet("GetGenero/{id:int}")]
         public ActionResult<Condiciones> GetById(int id)
         {
-            Condiciones result = condicionesService.GetById(id);
+            Condiciones result = condicionesService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Condiciones condicion)
         {
-            condicionesService.PostCondiciones(condicion);
-            condicionesService.SaveChanges();
+            condicionesService.Insert(condicion);
 
             return Ok();
         }
@@ -42,17 +41,15 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Condiciones condicion)
         {
-            condicionesService.PutCondiciones(condicion);
-            condicionesService.SaveChanges();
+            condicionesService.Update(condicion);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Condiciones condicion)
         {
-            condicionesService.DeleteCondiciones(condicion);
-            condicionesService.SaveChanges();
+            condicionesService.Delete(condicion);
 
             return Ok();
         }

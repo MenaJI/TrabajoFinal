@@ -6,53 +6,13 @@ using ApiREST.Services;
 
 namespace ApiREST.ServicesImp
 {
-    public class AniosService : IAniosService
+    public class AniosService : BaseServicesImp<Anios>, IAniosService
     {
         public SecurityDbContext dataProvider;
 
-        public AniosService(SecurityDbContext appDbContext) { dataProvider = appDbContext; }
-
-        public List<Anios> GetAll()
+        public AniosService(SecurityDbContext context) : base(context)
         {
-            return dataProvider.Anios.ToList();
-        }
-
-        public Anios GetById(int id)
-        {
-            return dataProvider.Anios.FirstOrDefault(x => x.Id == id);
-        }
-
-        public Anios GetByDescrip(string descrip)
-        {
-            return dataProvider.Anios.FirstOrDefault(x => x.Descrip == descrip);
-        }
-
-        public async void PostAnios(Anios anio)
-        {
-            await dataProvider.Anios.AddAsync(anio);
-        }
-
-        public void PutAnios(Anios anio)
-        {
-            Anios item = GetById(anio.Id);
-
-            if (item != null)
-            {
-                item.Descrip = anio.Descrip;
-            }
-        }
-
-        public void DeleteAnios(Anios anio)
-        {
-            if (dataProvider.Anios.Any(r => r.Id == anio.Id))
-            {
-                dataProvider.Anios.Remove(anio);
-            }
-        }
-
-        public void SaveChanges()
-        {
-            dataProvider.SaveChanges();
+            dataProvider = context;
         }
     }
 }

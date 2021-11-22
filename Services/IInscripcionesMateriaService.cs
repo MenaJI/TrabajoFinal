@@ -4,12 +4,8 @@ using ApiREST.Entities;
 
 namespace ApiREST.Services
 {
-    public interface IInscripcionesMateriaService
+    public interface IInscripcionesMateriaService : IBaseServices<InscripcionesMateria>
     {
-        List<InscripcionesMateria> GetAll();
-        void PostInscripcionMateria(InscripcionesMateria InscripcionesMateria);
-        void PutInscripcionMateria(InscripcionesMateria InscripcionesMateria);
-        void DeleteInscripcionMateria(InscripcionesMateria InscripcionesMateria);
-        void SaveChanges();
+
     }
 }

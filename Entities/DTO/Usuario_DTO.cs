@@ -1,4 +1,4 @@
-namespace ApiREST.DTOs
+namespace ApiREST.Entities.DTOs
 {
     public class Usuario_DTO
     {

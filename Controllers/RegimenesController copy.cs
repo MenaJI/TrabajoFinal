@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Formatos>> GetAll()
         {
-            return Ok(formatosService.GetAll());
+            return Ok(formatosService.Get());
         }
 
         [HttpGet("GetHorario/{id:int}")]
         public ActionResult<Formatos> GetById(int id)
         {
-            Formatos result = formatosService.GetById(id);
+            Formatos result = formatosService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Formatos formato)
         {
-            formatosService.PostFormatos(formato);
-            formatosService.SaveChanges();
+            formatosService.Insert(formato);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Formatos formato)
         {
-            formatosService.PutFormatos(formato);
-            formatosService.SaveChanges();
+            formatosService.Update(formato);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Formatos formato)
         {
-            formatosService.DeleteFormatos(formato);
-            formatosService.SaveChanges();
+            formatosService.Delete(formato);
 
             return Ok();
         }

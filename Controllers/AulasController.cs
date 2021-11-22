@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Aulas>> GetAll()
         {
-            return Ok(aulasService.GetAll());
+            return Ok(aulasService.Get());
         }
 
         [HttpGet("GetGenero/{id:int}")]
         public ActionResult<Aulas> GetById(int id)
         {
-            Aulas result = aulasService.GetById(id);
+            Aulas result = aulasService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Aulas aula)
         {
-            aulasService.PostAulas(aula);
-            aulasService.SaveChanges();
+            aulasService.Insert(aula);
 
             return Ok();
         }
@@ -42,17 +41,15 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Aulas aula)
         {
-            aulasService.PutAulas(aula);
-            aulasService.SaveChanges();
+            aulasService.Update(aula);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Aulas aula)
         {
-            aulasService.DeleteAulas(aula);
-            aulasService.SaveChanges();
+            aulasService.Delete(aula);
 
             return Ok();
         }

@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Modulos>> GetAll()
         {
-            return Ok(modulosService.GetAll());
+            return Ok(modulosService.Get());
         }
 
         [HttpGet("GetModulo/{id:int}")]
         public ActionResult<Modulos> GetById(int id)
         {
-            Modulos result = modulosService.GetById(id);
+            Modulos result = modulosService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Modulos modulo)
         {
-            modulosService.PostModulos(modulo);
-            modulosService.SaveChanges();
+            modulosService.Insert(modulo);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Modulos modulo)
         {
-            modulosService.PutModulos(modulo);
-            modulosService.SaveChanges();
+            modulosService.Update(modulo);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Modulos modulo)
         {
-            modulosService.DeleteModulos(modulo);
-            modulosService.SaveChanges();
+            modulosService.Delete(modulo);
 
             return Ok();
         }

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace ApiREST.Entities
 {
-    public class Materias
+    public class Materias : BaseEntity
     {
-        public int Id { get; set; }
-
         public string Descrip { get; set; }
 
         public bool Activa { get; set; }

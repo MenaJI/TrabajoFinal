@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiREST.DTOs
+namespace ApiREST.Entities.DTOs
 {
     public class Rol_DTO
     {

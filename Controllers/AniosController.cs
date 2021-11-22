@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Anios>> GetAll()
         {
-            return Ok(aniosService.GetAll());
+            return Ok(aniosService.Get());
         }
 
         [HttpGet("GetHorario/{id:int}")]
         public ActionResult<Anios> GetById(int id)
         {
-            Anios result = aniosService.GetById(id);
+            Anios result = aniosService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Anios anio)
         {
-            aniosService.PostAnios(anio);
-            aniosService.SaveChanges();
+            aniosService.Insert(anio);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Anios anio)
         {
-            aniosService.PutAnios(anio);
-            aniosService.SaveChanges();
+            aniosService.Update(anio);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Anios anio)
         {
-            aniosService.DeleteAnios(anio);
-            aniosService.SaveChanges();
+            aniosService.Delete(anio);
 
             return Ok();
         }

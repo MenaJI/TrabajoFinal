@@ -2,10 +2,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiREST.Entities
 {
-    public class Modulos
+    public class Modulos : BaseEntity
     {
-        public int Id { get; set; }
-
         [ForeignKey("Dia")]
         public int Fk_Dia { get; set; }
         public Dias Dia { get; set; }

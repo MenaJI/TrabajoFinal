@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Nacionalidades>> GetAll()
         {
-            return Ok(nacionalidadesService.GetAll());
+            return Ok(nacionalidadesService.Get());
         }
 
         [HttpGet("GetNacionalidad/{id:int}")]
         public ActionResult<Nacionalidades> GetById(int id)
         {
-            Nacionalidades result = nacionalidadesService.GetById(id);
+            Nacionalidades result = nacionalidadesService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Nacionalidades nacionalidad)
         {
-            nacionalidadesService.PostNacionalidades(nacionalidad);
-            nacionalidadesService.SaveChanges();
+            nacionalidadesService.Insert(nacionalidad);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Nacionalidades nacionalidad)
         {
-            nacionalidadesService.PutNacionalidades(nacionalidad);
-            nacionalidadesService.SaveChanges();
+            nacionalidadesService.Insert(nacionalidad);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Nacionalidades nacionalidad)
         {
-            nacionalidadesService.DeleteNacionalidades(nacionalidad);
-            nacionalidadesService.SaveChanges();
+            nacionalidadesService.Delete(nacionalidad);
 
             return Ok();
         }

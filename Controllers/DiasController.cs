@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Dias>> GetAll()
         {
-            return Ok(diasService.GetAll());
+            return Ok(diasService.Get());
         }
 
         [HttpGet("GetDia/{id:int}")]
         public ActionResult<Dias> GetById(int id)
         {
-            Dias result = diasService.GetById(id);
+            Dias result = diasService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,8 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Dias dia)
         {
-            diasService.PostDias(dia);
-            diasService.SaveChanges();
+            diasService.Insert(dia);
+
 
             return Ok();
         }
@@ -42,8 +42,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Dias dia)
         {
-            diasService.PutDias(dia);
-            diasService.SaveChanges();
+            diasService.Update(dia);
 
             return Ok();
         }
@@ -51,8 +50,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Dias dia)
         {
-            diasService.DeleteDias(dia);
-            diasService.SaveChanges();
+            diasService.Delete(dia);
 
             return Ok();
         }

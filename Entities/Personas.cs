@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ApiREST.Entities
 {
-    public class Personas
+    public class Personas : BaseEntity
     {
-        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
 
@@ -29,9 +28,6 @@ namespace ApiREST.Entities
         public int Fk_EstadoCivil { get; set; }
 
         public EstadosCiviles EstadoCivil { get; set; }
-
-        [ForeignKey("Usuario")]
-        public string Fk_Usuario { get; set; }
-        public Usuarios Usuario { get; set; }
+        public string NombreUsuario { get; set; }
     }
 }

@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Generos>> GetAll()
         {
-            return Ok(generosService.GetAll());
+            return Ok(generosService.Get());
         }
 
         [HttpGet("GetGenero/{id:int}")]
         public ActionResult<Generos> GetById(int id)
         {
-            Generos result = generosService.GetById(id);
+            Generos result = generosService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Generos genero)
         {
-            generosService.PostGeneros(genero);
-            generosService.SaveChanges();
+            generosService.Insert(genero);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Generos genero)
         {
-            generosService.PutGeneros(genero);
-            generosService.SaveChanges();
+            generosService.Update(genero);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Generos genero)
         {
-            generosService.DeleteGeneros(genero);
-            generosService.SaveChanges();
+            generosService.Delete(genero);
 
             return Ok();
         }
