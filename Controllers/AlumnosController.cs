@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ApiREST.Entities;
 using ApiREST.Services;
-
+using ApiREST.Models;
+using System;
 
 namespace ApiREST.Controllers
 {
@@ -25,16 +26,39 @@ namespace ApiREST.Controllers
         public IActionResult GetAll()
         {
 
-            var result = alumnosServices.Get();
+            var result = alumnosServices.GetAll();
 
-            return Ok(result);
+            if (result != null)
+                return Ok(result);
+
+            return NotFound(new Response() { Status = "Error", Message = "No se han encontrado alumnos." });
         }
 
         [HttpPost("AddItem")]
-        public IActionResult AddItem(Alumnos alumno)
+        public IActionResult AddItem(AlumnosModel alumno)
         {
-            alumnosServices.Insert(alumno);
-            return Ok();
+            try
+            {
+                alumnosServices.Insert(alumno);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new Response() { Status = "Error", Message = ex.InnerException.Message });
+            }
+        }
+
+        [HttpPost("GetUserAlumno")]
+        public IActionResult GetUserAlumno(string UserName)
+        {
+            var result = alumnosServices.GetAsNoTracking(a => a.NombreUsuario == UserName);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound();
         }
     };
 

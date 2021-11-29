@@ -1,6 +1,6 @@
-namespace ApiREST.Entities.DTOs
+namespace ApiREST.Models
 {
-    public class Usuario_DTO
+    public class UsuarioModel
     {
         public string NombreUsuario { get; set; }
         public string Email { get; set; }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
-using ApiREST.Entities.DTOs;
 using ApiREST.Models;
 using ApiREST.Services;
 using AutoMapper;
@@ -50,7 +49,7 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Roles> GetByNombreRol(Rol_DTO model)
+        public async Task<Roles> GetByNombreRol(RolModel model)
         {
             var rolExist = await roleManager.FindByNameAsync(model.Nombre);
             if (rolExist != null)
@@ -61,7 +60,7 @@ namespace ApiREST.ServicesImp
             return null;
         }
 
-        public async Task<Response> PostRol(Rol_DTO model)
+        public async Task<Response> PostRol(RolModel model)
         {
             var rolExist = await roleManager.FindByNameAsync(model.Nombre);
 

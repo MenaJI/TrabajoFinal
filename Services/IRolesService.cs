@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiREST.Entities;
-using ApiREST.Entities.DTOs;
 using ApiREST.Models;
 
 namespace ApiREST.Services
@@ -10,8 +9,8 @@ namespace ApiREST.Services
     public interface IRolesService
     {
         List<Roles> GetAll();
-        Task<Roles> GetByNombreRol(Rol_DTO model);
-        Task<Response> PostRol(Rol_DTO model);
+        Task<Roles> GetByNombreRol(RolModel model);
+        Task<Response> PostRol(RolModel model);
         void PutRol(Roles rol);
         Response DeleteRol(string model);
         void SaveChanges();

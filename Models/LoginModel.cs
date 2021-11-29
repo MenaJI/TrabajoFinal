@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiREST.Entities.DTOs
+namespace ApiREST.Models
 {
-    public class Login_DTO
+    public class LoginModel
     {
         [Required(ErrorMessage = "El nombre de usuario es requerido")]
         public string nombreusuario { get; set; }
