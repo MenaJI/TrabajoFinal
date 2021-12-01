@@ -12,7 +12,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Linq;
 using AutoMapper;
-using ApiREST.DTOs;
 
 namespace ApiREST.ServicesImp
 {
@@ -32,7 +31,7 @@ namespace ApiREST.ServicesImp
             iMapper = _iMapper;
         }
 
-        public void BorrarUsuario(Usuario_DTO usuario)
+        public void BorrarUsuario(UsuarioModel usuario)
         {
             var result = userManager.FindByNameAsync(usuario.NombreUsuario);
             if (result != null)
@@ -54,7 +53,7 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<TokenModel> Login(Login_DTO model)
+        public async Task<TokenModel> Login(LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.nombreusuario);
 
@@ -64,6 +63,7 @@ namespace ApiREST.ServicesImp
             {
                 // Solicita el rol del usuario.
                 var userRoles = await userManager.GetRolesAsync(user);
+                string roles = "";
 
                 // Se crea una lista de los Claims que va a tener el JWT.
                 var authClaims = new List<Claim>
@@ -75,6 +75,7 @@ namespace ApiREST.ServicesImp
                 foreach (var userRole in userRoles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                    roles += userRole.ToString();
                 }
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
@@ -89,7 +90,9 @@ namespace ApiREST.ServicesImp
                 // Se crea el mensaje de respuesta.
                 result = new TokenModel
                 {
-                    Token = new JwtSecurityTokenHandler().WriteToken(token)
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    NombreUsuario = user.UserName,
+                    Rol = roles
                 };
 
                 return result;
@@ -98,30 +101,47 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Response> RegistrarUsuario(Registro_DTO model)
+        public async Task<Response> RegistrarUsuario(RegistroModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.NombreUsuario);
-
-            if (userExists != null)
+            try
             {
-                return new Response() { Status = "Error", Message = "El usuario ya existe." };
+                var userExists = await userManager.FindByNameAsync(model.NombreUsuario);
+
+                if (userExists != null)
+                {
+                    return new Response() { Status = "Error", Message = "El usuario ya existe." };
+                }
+
+                var rolBase = roleManager.Roles.FirstOrDefault(r => r.Name == "Alumnos");
+
+                if (rolBase == null)
+                {
+                    return new Response() { Status = "Error", Message = "El rol predeterminado de 'Alumno' no existe." };
+                }
+
+                Usuarios usuario = new Usuarios()
+                {
+                    Email = model.Email,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = model.NombreUsuario,
+                };
+
+                var result = await userManager.CreateAsync(usuario, model.Contraseña);
+
+                if (!result.Succeeded)
+                {
+                    return new Response { Status = "Error", Message = "La creacion del usuario fallo. Vuelva a intentarlo." };
+                }
+
+                await userManager.AddToRoleAsync(usuario, rolBase.ToString());
+
+                return new Response { Status = "Success", Message = "El usuario fue creado con exito." };
+
             }
-
-            Usuarios usuario = new Usuarios()
+            catch (Exception ex)
             {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.NombreUsuario,
-            };
-
-            var result = await userManager.CreateAsync(usuario, model.Contraseña);
-
-            if (!result.Succeeded)
-            {
-                return new Response { Status = "Error", Message = "La creacion del usuario fallo. Vuelva a intentarlo." };
+                return new Response() { Status = "Error", Message = ex.InnerException.Message };
             }
-
-            return new Response { Status = "Success", Message = "El usuario fue creado con exito." };
         }
     }
 }

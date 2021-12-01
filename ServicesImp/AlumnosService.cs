@@ -1,60 +1,87 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
+using ApiREST.Models;
 using ApiREST.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiREST.ServicesImp
 {
-    public class AlumnosService : IAlumnosServices
+    public class AlumnosService : BaseServicesImp<Alumnos>, IAlumnosServices
     {
         private readonly SecurityDbContext dataProvider;
-        private readonly UserManager<Usuarios> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        public AlumnosService(SecurityDbContext dataProvider_, UserManager<Usuarios> _userManager, RoleManager<IdentityRole> _roleManager)
+        // private readonly UserManager<Usuarios> userManager;
+        // private readonly RoleManager<IdentityRole> roleManager;
+        public AlumnosService(SecurityDbContext context) : base(context)
         {
-            userManager = _userManager;
-            dataProvider = dataProvider_;
-            roleManager = _roleManager;
+            dataProvider = context;
         }
 
-        public void DeleteAlumnos(Alumnos alumnos)
+        public Alumnos Insert(AlumnosModel model)
         {
-            var alumno = dataProvider.Alumnos.FirstOrDefault(a => a.Id == alumnos.Id);
-            if (alumno != null)
+            try
             {
-                dataProvider.Alumnos.Remove(alumnos);
+                var alumno = MapearAlumno(model);
+
+                return Insert(alumno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
-        public List<Alumnos> GetAll()
+        public List<AlumnosModel> GetAll()
         {
-            return dataProvider.Alumnos.Include("Usuario").Include("Roles").ToList();
-        }
+            var listAlumnos = Get("TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil");
 
-        public void PostAlumnos(Alumnos alumnos)
-        {
-            var result = dataProvider.Alumnos.FirstOrDefault(a => a.Id == alumnos.Id);
-            if (result == null)
+            var result = new List<AlumnosModel>();
+
+            foreach (var alumno in listAlumnos)
             {
-                dataProvider.Alumnos.Add(result);
+                result.Add(MapearAlumnoModel(alumno));
             }
+
+            return result;
         }
 
-        public void PutAlumnos(Alumnos alumnos)
+        private AlumnosModel MapearAlumnoModel(Alumnos alumno)
         {
-            var result = dataProvider.Alumnos.FirstOrDefault(a => a.Id == alumnos.Id);
-            if (result != null)
+            var alumnoModel = new AlumnosModel()
             {
-                result = alumnos;
-            }
+                Nombre = alumno.Nombre,
+                Apellido = alumno.Apellido,
+                TipoDocumento = alumno.TipoDoc.Descrip,
+                NroDocumento = alumno.NroDocumento,
+                Genero = alumno.Genero.Descrip,
+                Localidad = alumno.Localidad.Descrip,
+                Nacionalidad = alumno.Nacionalidad.Descrip,
+                EstadoCivil = alumno.EstadoCivil.Descrip,
+                NombreUsuario = alumno.NombreUsuario
+            };
+
+            return alumnoModel;
         }
 
-        public void SaveChanges()
+        private Alumnos MapearAlumno(AlumnosModel model)
         {
-            dataProvider.SaveChanges();
+            var result = new Alumnos()
+            {
+                Nombre = model.Nombre,
+                Apellido = model.Apellido,
+                TipoDoc = dataProvider.TiposDocs.FirstOrDefault(td => td.Descrip == model.TipoDocumento),
+                NroDocumento = model.NroDocumento,
+                Genero = dataProvider.Generos.FirstOrDefault(g => g.Descrip == model.Genero),
+                Localidad = dataProvider.Localidades.FirstOrDefault(l => l.Descrip == model.Localidad),
+                Nacionalidad = dataProvider.Nacionalidades.FirstOrDefault(n => n.Descrip == model.Nacionalidad),
+                EstadoCivil = dataProvider.EstadosCiviles.FirstOrDefault(ec => ec.Descrip == model.EstadoCivil),
+                NombreUsuario = model.NombreUsuario
+            };
+
+            return result;
         }
     }
 }

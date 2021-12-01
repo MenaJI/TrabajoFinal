@@ -3,14 +3,8 @@ using ApiREST.Entities;
 
 namespace ApiREST.Services
 {
-    public interface IAniosService
+    public interface IAniosService : IBaseServices<Anios>
     {
-        List<Anios> GetAll();
-        Anios GetById(int id);
-        Anios GetByDescrip(string descrip);
-        void PostAnios(Anios anio);
-        void PutAnios(Anios anio);
-        void DeleteAnios(Anios anio);
-        void SaveChanges();
+
     }
 }

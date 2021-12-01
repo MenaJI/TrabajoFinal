@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiREST.Entities;
+using ApiREST.Models;
 
 namespace ApiREST.Services
 {
-    public interface IAlumnosServices
+    public interface IAlumnosServices : IBaseServices<Alumnos>
     {
-        List<Alumnos> GetAll();
-        void PostAlumnos ( Alumnos alumnos);
-        void PutAlumnos (Alumnos alumnos);
-        void DeleteAlumnos ( Alumnos alumnos);
-        void SaveChanges();
+        Alumnos Insert(AlumnosModel model);
+        List<AlumnosModel> GetAll();
     }
 }

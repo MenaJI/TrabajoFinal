@@ -12,12 +12,12 @@ namespace ApiREST.Controllers
     public class InscripcionController : ControllerBase
     {
 
-        private IInscripcionService inscripcionservices;
+        private IInscripcionCarreraService inscripcionCarreraService;
 
-        public InscripcionController(IInscripcionService inscripcionservice_)
+        public InscripcionController(IInscripcionCarreraService inscripcionCarreraService_)
         {
 
-            inscripcionservices = inscripcionservice_;
+            inscripcionCarreraService = inscripcionCarreraService_;
 
         }
 
@@ -25,7 +25,7 @@ namespace ApiREST.Controllers
         public IActionResult GetAll()
         {
 
-            var result = inscripcionservices.GetAll();
+            var result = inscripcionCarreraService.Get();
 
             return Ok(result);
         }

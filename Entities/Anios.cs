@@ -1,8 +1,7 @@
 namespace ApiREST.Entities
 {
-    public class Anios
+    public class Anios : BaseEntity
     {
-        public int Id { get; set; }
         public string Descrip { get; set; }
     }
 }

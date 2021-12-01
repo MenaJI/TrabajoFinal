@@ -3,14 +3,8 @@ using ApiREST.Entities;
 
 namespace ApiREST.Services
 {
-    public interface IModulosService
+    public interface IModulosService : IBaseServices<Modulos>
     {
-        List<Modulos> GetAll();
-        Modulos GetById(int id);
-        //Modulos GetByDescrip(string descrip);
-        void PostModulos(Modulos modulo);
-        void PutModulos(Modulos modulo);
-        void DeleteModulos(Modulos modulo);
-        void SaveChanges();
+
     }
 }

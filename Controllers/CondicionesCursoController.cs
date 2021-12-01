@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<CondicionesCurso>> GetAll()
         {
-            return Ok(condicionesCursoService.GetAll());
+            return Ok(condicionesCursoService.Get());
         }
 
         [HttpGet("GetGenero/{id:int}")]
         public ActionResult<CondicionesCurso> GetById(int id)
         {
-            CondicionesCurso result = condicionesCursoService.GetById(id);
+            CondicionesCurso result = condicionesCursoService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] CondicionesCurso condicionCurso)
         {
-            condicionesCursoService.PostCondicionesCurso(condicionCurso);
-            condicionesCursoService.SaveChanges();
+            condicionesCursoService.Insert(condicionCurso);
 
             return Ok();
         }
@@ -42,8 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(CondicionesCurso condicionCurso)
         {
-            condicionesCursoService.PutCondicionesCurso(condicionCurso);
-            condicionesCursoService.SaveChanges();
+            condicionesCursoService.Insert(condicionCurso);
 
             return NotFound();
         }
@@ -51,8 +49,7 @@ namespace ApiREST.Controllers
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(CondicionesCurso condicionCurso)
         {
-            condicionesCursoService.DeleteCondicionesCurso(condicionCurso);
-            condicionesCursoService.SaveChanges();
+            condicionesCursoService.Delete(condicionCurso);
 
             return Ok();
         }

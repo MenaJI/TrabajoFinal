@@ -4,27 +4,31 @@ using ApiREST.Entities;
 using ApiREST.Services;
 
 
-namespace ApiREST.Controllers{
-[ApiController]
-[Route("api/{controller}")]
+namespace ApiREST.Controllers
+{
+    [ApiController]
+    [Route("api/{controller}")]
 
-    public class CarrerasController : ControllerBase{
+    public class CarrerasController : ControllerBase
+    {
 
         private ICarrerasService carrerasservices;
 
-        public CarrerasController(ICarrerasService carrerasservice_){
+        public CarrerasController(ICarrerasService carrerasservice_)
+        {
 
             carrerasservices = carrerasservice_;
 
         }
-         
-         [HttpGet("GetAll")]
-         public IActionResult GetAll(){
 
-             var result = carrerasservices.GetAll();
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
 
-             return Ok(result);
-         }
+            var result = carrerasservices.Get();
+
+            return Ok(result);
+        }
     };
 
 }

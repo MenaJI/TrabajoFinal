@@ -16,13 +16,13 @@ namespace ApiREST.Controllers
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Campos>> GetAll()
         {
-            return Ok(camposService.GetAll());
+            return Ok(camposService.Get());
         }
 
         [HttpGet("GetHorario/{id:int}")]
         public ActionResult<Campos> GetById(int id)
         {
-            Campos result = camposService.GetById(id);
+            Campos result = camposService.GetByID(id);
             if (result != null)
             {
                 return Ok(result);
@@ -33,8 +33,7 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Campos campo)
         {
-            camposService.PostCampos(campo);
-            camposService.SaveChanges();
+            camposService.Insert(campo);
 
             return Ok();
         }
@@ -42,17 +41,15 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Campos campo)
         {
-            camposService.PutCampos(campo);
-            camposService.SaveChanges();
+            camposService.Update(campo);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]
         public ActionResult RemoveItem(Campos campo)
         {
-            camposService.DeleteCampos(campo);
-            camposService.SaveChanges();
+            camposService.Delete(campo);
 
             return Ok();
         }

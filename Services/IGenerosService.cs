@@ -3,14 +3,8 @@ using ApiREST.Entities;
 
 namespace ApiREST.Services
 {
-    public interface IGenerosService
+    public interface IGenerosService : IBaseServices<Generos>
     {
-        List<Generos> GetAll();
-        Generos GetById(int id);
-        Generos GetByDescrip(string descrip);
-        void PostGeneros(Generos genero);
-        void PutGeneros(Generos genero);
-        void DeleteGeneros(Generos genero);
-        void SaveChanges();
+
     }
 }

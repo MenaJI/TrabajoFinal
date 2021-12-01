@@ -63,7 +63,7 @@ namespace ApiREST
             services.AddScoped<IModulosService, ModulosService>();
             services.AddScoped<IAlumnosServices, AlumnosService>();
             services.AddScoped<ICarrerasService, CarrerasService>();
-            services.AddScoped<IInscripcionService, InscripcionService>();
+            services.AddScoped<InscripcionCarreraService, InscripcionCarreraService>();
             services.AddScoped<IAniosService, AniosService>();
             services.AddScoped<IRegimenesService, RegimenesService>();
             services.AddScoped<ICamposService, CamposService>();

@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using ApiREST.DTOs;
 using ApiREST.Models;
 using ApiREST.Services;
-using ApiREST.ServicesImp;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiREST.Controllers
@@ -26,7 +24,7 @@ namespace ApiREST.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] Login_DTO model)
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
 
             var result = await usuariosService.Login(model);
@@ -39,7 +37,7 @@ namespace ApiREST.Controllers
         }
 
         [HttpPost("RegistrarUsuario")]
-        public async Task<IActionResult> Registro([FromBody] Registro_DTO model)
+        public async Task<IActionResult> Registro([FromBody] RegistroModel model)
         {
 
             var result = await usuariosService.RegistrarUsuario(model);

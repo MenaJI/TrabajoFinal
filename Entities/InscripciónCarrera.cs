@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiREST.Entities
 {
-    public class InscripcionCarrera
+    public class InscripcionCarrera : BaseEntity
     {
-        public int Id { get; set; }
         [ForeignKey("Carrera")]
         public int Fk_Carrera { get; set; }
         public Carreras Carrera { get; set; }
