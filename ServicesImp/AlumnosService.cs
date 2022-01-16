@@ -24,9 +24,29 @@ namespace ApiREST.ServicesImp
         {
             try
             {
-                var alumno = MapearAlumno(model);
+                Alumnos alumno;
 
-                return Insert(alumno);
+                alumno = Get(a => a.NombreUsuario == model.NombreUsuario, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+
+                if (alumno != null)
+                {
+                    alumno.Nombre = model.Nombre;
+                    alumno.Apellido = model.Apellido;
+                    alumno.TipoDoc = dataProvider.TiposDocs.FirstOrDefault(td => td.Descrip == model.TipoDocumento);
+                    alumno.NroDocumento = model.NumeroDocumento;
+                    alumno.Genero = dataProvider.Generos.FirstOrDefault(g => g.Descrip == model.Genero);
+                    alumno.Localidad = dataProvider.Localidades.FirstOrDefault(l => l.Descrip == model.Localidad);
+                    alumno.Nacionalidad = dataProvider.Nacionalidades.FirstOrDefault(n => n.Descrip == model.Nacionalidad);
+                    alumno.EstadoCivil = dataProvider.EstadosCiviles.FirstOrDefault(ec => ec.Descrip == model.EstadoCivil);
+                    alumno.NombreUsuario = model.NombreUsuario;
+                    Update(alumno);
+                }
+                else
+                {
+                    Insert(MapearAlumno(model));
+                }
+
+                return alumno;
             }
             catch (Exception ex)
             {
@@ -48,14 +68,14 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        private AlumnosModel MapearAlumnoModel(Alumnos alumno)
+        public AlumnosModel MapearAlumnoModel(Alumnos alumno)
         {
             var alumnoModel = new AlumnosModel()
             {
                 Nombre = alumno.Nombre,
                 Apellido = alumno.Apellido,
                 TipoDocumento = alumno.TipoDoc.Descrip,
-                NroDocumento = alumno.NroDocumento,
+                NumeroDocumento = alumno.NroDocumento,
                 Genero = alumno.Genero.Descrip,
                 Localidad = alumno.Localidad.Descrip,
                 Nacionalidad = alumno.Nacionalidad.Descrip,
@@ -66,14 +86,14 @@ namespace ApiREST.ServicesImp
             return alumnoModel;
         }
 
-        private Alumnos MapearAlumno(AlumnosModel model)
+        public Alumnos MapearAlumno(AlumnosModel model)
         {
             var result = new Alumnos()
             {
                 Nombre = model.Nombre,
                 Apellido = model.Apellido,
                 TipoDoc = dataProvider.TiposDocs.FirstOrDefault(td => td.Descrip == model.TipoDocumento),
-                NroDocumento = model.NroDocumento,
+                NroDocumento = model.NumeroDocumento,
                 Genero = dataProvider.Generos.FirstOrDefault(g => g.Descrip == model.Genero),
                 Localidad = dataProvider.Localidades.FirstOrDefault(l => l.Descrip == model.Localidad),
                 Nacionalidad = dataProvider.Nacionalidades.FirstOrDefault(n => n.Descrip == model.Nacionalidad),

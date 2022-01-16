@@ -8,6 +8,7 @@ namespace ApiREST.Services
     public interface IAlumnosServices : IBaseServices<Alumnos>
     {
         Alumnos Insert(AlumnosModel model);
+        AlumnosModel MapearAlumnoModel(Alumnos model);
         List<AlumnosModel> GetAll();
     }
 }

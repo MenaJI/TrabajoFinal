@@ -4,6 +4,7 @@ using ApiREST.Entities;
 using ApiREST.Services;
 using ApiREST.Models;
 using System;
+using System.Linq;
 
 namespace ApiREST.Controllers
 {
@@ -39,7 +40,11 @@ namespace ApiREST.Controllers
         {
             try
             {
-                alumnosServices.Insert(alumno);
+                var result = alumnosServices.Insert(alumno);
+
+                if (result != null)
+                    return Ok(new Response() { Status = "0001", Message = "Ya existe " });
+
                 return Ok();
             }
             catch (Exception ex)
@@ -48,14 +53,14 @@ namespace ApiREST.Controllers
             }
         }
 
-        [HttpPost("GetUserAlumno")]
+        [HttpGet("GetUserAlumno")]
         public IActionResult GetUserAlumno(string UserName)
         {
-            var result = alumnosServices.GetAsNoTracking(a => a.NombreUsuario == UserName);
+            var result = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
 
             if (result != null)
             {
-                return Ok(result);
+                return Ok(alumnosServices.MapearAlumnoModel(result));
             }
 
             return NotFound();
