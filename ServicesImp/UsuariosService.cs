@@ -112,7 +112,7 @@ namespace ApiREST.ServicesImp
                     return new Response() { Status = "Error", Message = "El usuario ya existe." };
                 }
 
-                var rolBase = roleManager.Roles.FirstOrDefault(r => r.Name == "Alumnos");
+                var rolBase = roleManager.Roles.FirstOrDefault(r => r.Name == "Alumno");
 
                 if (rolBase == null)
                 {
