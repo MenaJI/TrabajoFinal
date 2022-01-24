@@ -134,6 +134,10 @@ INSERT INTO [dbo].[Generos]
     ([Descrip])
 VALUES
     ('Femenino')
+INSERT INTO [dbo].[Generos]
+    ([Descrip])
+VALUES
+    ('X')
 
 /*Horarios*/
 INSERT INTO [dbo].[Horarios]
