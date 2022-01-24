@@ -43,7 +43,7 @@ namespace ApiREST.Controllers
         {
             estadosCivilesServices.Update(estadoCivil);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]
