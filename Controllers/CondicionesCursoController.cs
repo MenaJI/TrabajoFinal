@@ -41,7 +41,7 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(CondicionesCurso condicionCurso)
         {
-            condicionesCursoService.Insert(condicionCurso);
+            condicionesCursoService.Update(condicionCurso);
 
             return NotFound();
         }
