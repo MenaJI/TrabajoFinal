@@ -70,6 +70,7 @@ namespace ApiREST
             services.AddScoped<ICondicionesCursoService, CondicionesCursoService>();
             services.AddScoped<IFormatosService, FormatosService>();
             services.AddScoped<IInscripcionesMateriaService, InscripcionesMateriaService>();
+            services.AddScoped<IArchivosServices, ArchivoService>();
 
 
             // Para usar Identity  
