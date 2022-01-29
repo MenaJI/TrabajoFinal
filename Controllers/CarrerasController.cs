@@ -29,6 +29,40 @@ namespace ApiREST.Controllers
 
             return Ok(result);
         }
+                [HttpGet("GetGenero/{id:int}")]
+        public ActionResult<Carreras> GetById(int id)
+        {
+            Carreras result = carrerasservices.GetByID(id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound();
+        }
+
+        [HttpPost("AddItem")]
+        public ActionResult AddItem([FromBody] Carreras carrera)
+        {
+            carrerasservices.Insert(carrera);
+
+            return Ok();
+        }
+
+        [HttpPut("ChangeItem")]
+        public ActionResult RemplaseItem(Carreras carrera)
+        {
+            carrerasservices.Update(carrera);
+
+            return Ok();
+        }
+
+        [HttpDelete("RemoveItem")]
+        public ActionResult RemoveItem(Carreras carrera)
+        {
+            carrerasservices.Delete(carrera);
+
+            return Ok();
+        }
     };
 
 }
