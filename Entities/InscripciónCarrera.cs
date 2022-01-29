@@ -8,5 +8,7 @@ namespace ApiREST.Entities
         [ForeignKey("Carrera")]
         public int Fk_Carrera { get; set; }
         public Carreras Carrera { get; set; }
+        public string Estado { get; set; }
+
     }
 }
