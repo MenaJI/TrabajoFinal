@@ -71,7 +71,7 @@ namespace ApiREST.ServicesImp
             {
                 query = query.Include(includeProperty);
             }
-            return query.Where(filter);
+            return query.Where(filter).ToList();
         }
 
         public virtual IEnumerable<TEntity> Get()

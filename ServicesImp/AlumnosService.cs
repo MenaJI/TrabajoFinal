@@ -50,7 +50,7 @@ namespace ApiREST.ServicesImp
             }
             catch (Exception ex)
             {
-                throw ex;
+                return null;
             }
         }
 
@@ -80,7 +80,8 @@ namespace ApiREST.ServicesImp
                 Localidad = alumno.Localidad.Descrip,
                 Nacionalidad = alumno.Nacionalidad.Descrip,
                 EstadoCivil = alumno.EstadoCivil.Descrip,
-                NombreUsuario = alumno.NombreUsuario
+                NombreUsuario = alumno.NombreUsuario,
+                InscripcionesCarrera = alumno.InscripcionCarreras.ToList()
             };
 
             return alumnoModel;
