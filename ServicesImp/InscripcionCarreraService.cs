@@ -14,5 +14,10 @@ namespace ApiREST.ServicesImp
         {
             dataProvider = context;
         }
+
+        // public IEnumerable<InscripcionCarrera> obtenerInscripcionesCarrera(int Id, string Propiedades){
+        //     IQueryable<InscripcionCarrera> Query = 
+        // }
+
     }
 }

@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ApiREST.Entities;
+using ApiREST.Models;
 namespace ApiREST.Models
 {
     public class AlumnosModel
@@ -11,5 +15,7 @@ namespace ApiREST.Models
         public string Nacionalidad { get; set; }
         public string EstadoCivil { get; set; }
         public string NombreUsuario { get; set; }
+
+        public List<InscripcionCarrera> InscripcionesCarrera { get; set; }
     }
 }

@@ -16,10 +16,16 @@ namespace ApiREST.Controllers
 
         private IAlumnosServices alumnosServices;
 
-        public AlumnosController(IAlumnosServices alumnosServices_)
+        private ICarrerasService carrerasService;
+
+        private IInscripcionCarreraService inscripcionCarreraService;
+
+        public AlumnosController(IAlumnosServices alumnosServices_, ICarrerasService carrerasService_, IInscripcionCarreraService inscripcionCarreraService_)
         {
 
             alumnosServices = alumnosServices_;
+            carrerasService = carrerasService_;
+            inscripcionCarreraService = inscripcionCarreraService_;
 
         }
 
@@ -56,15 +62,59 @@ namespace ApiREST.Controllers
         [HttpGet("GetUserAlumno")]
         public IActionResult GetUserAlumno(string UserName)
         {
-            var result = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
 
-            if (result != null)
+            if (alumno != null)
             {
-                return Ok(alumnosServices.MapearAlumnoModel(result));
+                var inscripciones = inscripcionCarreraService.Get(i => alumno.InscripcionCarreras.FirstOrDefault(x => x.Id == i.Id) != null, "");
+
+                foreach (var inscripcion in inscripciones)
+                {
+                    inscripcion.Carrera = carrerasService.Get(c => c.Id == inscripcion.Fk_Carrera, "").FirstOrDefault();
+                }
+
+                alumno.InscripcionCarreras = inscripciones.ToList();
+                return Ok(alumnosServices.MapearAlumnoModel(alumno));
             }
 
             return NotFound();
         }
+
+        [HttpGet("AgregarIC")]
+        public IActionResult AgregarIC(string UserName, string Carrera, string Estado)
+        {
+            var alumno = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var carrera = carrerasService.Get(c => c.Descripcion == Carrera, "").FirstOrDefault();
+
+            if (alumno != null && carrera != null)
+            {
+                alumno.InscripcionCarreras.Add(new InscripcionCarrera()
+                {
+                    Carrera = carrera,
+                    Estado = Estado
+                });
+                alumnosServices.Update(alumno);
+                return Ok(alumnosServices.MapearAlumnoModel(alumno));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("AnularIC")]
+        public IActionResult AnularIC(int id, string estado)
+        {
+            var result = inscripcionCarreraService.Get(i => i.Id == id, "").FirstOrDefault();
+
+            if (result != null)
+            {
+                result.Estado = estado;
+                inscripcionCarreraService.Update(result);
+                return Ok();
+            }
+
+            return NotFound(new Response() { Status = "Error", Message = "No se han encontrado alumnos." });
+        }
+
     };
 
 }
