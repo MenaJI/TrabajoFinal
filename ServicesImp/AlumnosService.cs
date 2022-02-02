@@ -48,7 +48,7 @@ namespace ApiREST.ServicesImp
 
                 return alumno;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

@@ -76,7 +76,7 @@ namespace ApiREST.ServicesImp
 
         public virtual IEnumerable<TEntity> Get()
         {
-            return dbSet;
+            return dbSet.ToList();
         }
         public virtual IEnumerable<TEntity> Get(string includeProperties)
         {
@@ -87,7 +87,7 @@ namespace ApiREST.ServicesImp
                 query = query.Include(includeProperty);
             }
 
-            return query;
+            return query.ToList();
         }
         public virtual IEnumerable<TEntity> Get(List<Func<TEntity, bool>> filtros, string includeProperties, Int32 NroPagina = 0, Int32 RegistrosPorPagina = int.MaxValue)
         {
@@ -108,7 +108,7 @@ namespace ApiREST.ServicesImp
             return query.Where(filter)
                 .OrderByDescending(x => x.Id)
                 .Skip(NroPagina * RegistrosPorPagina)
-                .Take(RegistrosPorPagina);
+                .Take(RegistrosPorPagina).ToList();
         }
 
         public virtual TEntity GetByID(object id)

@@ -24,6 +24,10 @@ namespace ApiREST.Entities
 
         [ForeignKey("Carrera")] public int Fk_Carrera { get; set; }
         public Carreras Carrera { get; set; }
-        public virtual ICollection<Materias> Correlativas { get; set; }
+
+        public string MateriasCorrelativas { get; set; }
+
+        [NotMapped]
+        public List<Materias> MateriasList { get; set; }
     }
 }
