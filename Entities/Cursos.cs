@@ -32,9 +32,14 @@ namespace ApiREST.Entities
         [ForeignKey("Aula")]
         public int Fk_Aula { get; set; }
         public Aulas Aula { get; set; }
-        [MaxLength(3)]
-        public ICollection<Docentes> Docentes { get; set; }
-        public virtual ICollection<Modulos> Modulos { get; set; }
+
+        public string DocentesId { get; set; }
+        public string ModulosId { get; set; }
+
+        [NotMapped]
+        public List<Docentes> Docentes { get; set; }
+        [NotMapped]
+        public virtual List<Modulos> Modulos { get; set; }
 
     }
 }

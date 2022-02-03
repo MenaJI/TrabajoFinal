@@ -7,11 +7,11 @@ using ApiREST.Services;
 
 namespace ApiREST.ServicesImp
 {
-    public class AniosService : BaseServicesImp<Anios>, IAniosService
+    public class DocentesServices : BaseServicesImp<Docentes>, IDocentesServices
     {
         public SecurityDbContext dataProvider;
 
-        public AniosService(SecurityDbContext context) : base(context)
+        public DocentesServices(SecurityDbContext context) : base(context)
         {
             dataProvider = context;
         }

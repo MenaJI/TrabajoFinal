@@ -72,6 +72,8 @@ namespace ApiREST
             services.AddScoped<IInscripcionesMateriaService, InscripcionesMateriaService>();
             services.AddScoped<IArchivosServices, ArchivoService>();
             services.AddScoped<IMateriasService, MateriasServices>();
+            services.AddScoped<ICursosServices, CursosServices>();
+            services.AddScoped<IDocentesServices, DocentesServices>();
 
 
             // Para usar Identity  

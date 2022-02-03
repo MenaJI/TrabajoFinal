@@ -26,7 +26,7 @@ namespace ApiREST.Controllers
         public IActionResult GetAll()
         {
 
-            var materias = materiasService.Get();
+            var materias = materiasService.Get("Anio,Regimen,Campo,Carrera");
 
             if (materias.Any())
             {

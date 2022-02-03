@@ -41,5 +41,6 @@ namespace ApiREST.DataProvider
         public DbSet<Formatos> Formatos { get; set; }
         public DbSet<InscripcionesMateria> InscripcionesMateria { get; set; }
         public DbSet<Archivos> Archivos { get; set; }
+        public DbSet<Docentes> Docentes { get; set; }
     }
 }

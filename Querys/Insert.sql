@@ -279,4 +279,94 @@ VALUES
 
 GO
 
+USE [ApiREST]
+GO
 
+INSERT INTO [dbo].[Materias]
+    ([Descrip]
+    ,[Activa]
+    ,[HorasCatSem]
+    ,[HorasCatAnu]
+    ,[Fk_Anio]
+    ,[Fk_Regimen]
+    ,[Fk_Campo]
+    ,[Fk_Carrera]
+    ,[MateriasCorrelativas])
+VALUES
+    ('Matematica'
+           , 0
+           , 8
+           , 180
+           , 1
+           , 1
+           , 1
+           , 1
+           , '')
+GO
+
+USE [ApiREST]
+GO
+
+INSERT INTO [dbo].[Modulos]
+    ([Fk_Dia]
+    ,[Fk_Horario]
+    ,[Estado])
+VALUES
+    (1
+           , 1
+           , 0)
+GO
+
+USE [ApiREST]
+GO
+
+INSERT INTO [dbo].[Docentes]
+    ([Nombre]
+    ,[Apellido]
+    ,[Fk_TipoDoc]
+    ,[NroDocumento]
+    ,[Fk_Genero]
+    ,[Fk_Localidad]
+    ,[Fk_Nacionalidad]
+    ,[Fk_EstadoCivil]
+    ,[NombreUsuario])
+VALUES
+    ('Prueba Docente'
+           , 'Prueba Docente'
+           , 1
+           , 12345678
+           , 1
+           , 1
+           , 1
+           , 1
+           , '')
+GO
+
+USE [ApiREST]
+GO
+
+INSERT INTO [dbo].[Cursos]
+    ([Descrip]
+    ,[Activa]
+    ,[Cupos]
+    ,[FechaInicio]
+    ,[FechaFin]
+    ,[Fk_Materia]
+    ,[Fk_CondicionCurso]
+    ,[Fk_Formato]
+    ,[Fk_Aula]
+    ,[DocentesId]
+    ,[ModulosId])
+VALUES
+    ('CURSO PRUEBA'
+           , 0
+           , 30
+           , '2019-08-12'
+           , '2020-08-12'
+           , 1
+           , 1
+           , 1
+           , 1
+		   , '1,2'
+		   , '1')
+GO
