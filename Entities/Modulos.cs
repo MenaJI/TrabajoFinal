@@ -11,5 +11,11 @@ namespace ApiREST.Entities
         public int Fk_Horario { get; set; }
         public Horarios Horario { get; set; }
         public bool Estado { get; set; }
+
+        [NotMapped]
+        public string ModelDescrip
+        {
+            get { return this.Dia.Descrip + ' ' + this.Horario.Descrip; }
+        }
     }
 }

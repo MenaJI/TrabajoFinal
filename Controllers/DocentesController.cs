@@ -44,7 +44,7 @@ namespace ApiREST.Controllers
         {
             docentesServices.Update(docente);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]

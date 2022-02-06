@@ -14,13 +14,18 @@ namespace ApiREST.Controllers
         private IModulosService modulosService;
         private IDocentesServices docentesServices;
 
-        public CursosController(ICursosServices _cursosServices) { cursosServices = _cursosServices; }
+        public CursosController(ICursosServices _cursosServices, IModulosService _modulosService, IDocentesServices _docentesService)
+        {
+            cursosServices = _cursosServices;
+            modulosService = _modulosService;
+            docentesServices = _docentesService;
+        }
 
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Cursos>> GetAll()
         {
 
-            var cursos = cursosServices.Get("Anio,Regimen,Campo,Carrera");
+            var cursos = cursosServices.Get("Formato,Aula,Materia,CondicionCurso");
 
             if (cursos.Any())
             {
