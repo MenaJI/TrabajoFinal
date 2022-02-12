@@ -1,10 +1,11 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiREST.Entities
 {
     public class InscripcionesMateria : BaseEntity
     {
-        public int Fecha { get; set; }
+        public DateTime Fecha { get; set; }
         public bool Activo { get; set; }
         [ForeignKey("Curso")] public int Fk_Curso { get; set; }
         public Cursos Curso { get; set; }
@@ -15,5 +16,6 @@ namespace ApiREST.Entities
         [ForeignKey("Condicion")]
         public int Fk_Condicion { get; set; }
         public Condiciones Condicion { get; set; }
+        public string Estado { get; set; }
     }
 }

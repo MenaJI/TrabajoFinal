@@ -83,5 +83,14 @@ namespace ApiREST.Controllers
 
             return Ok();
         }
+
+        [HttpGet("test")]
+        public ActionResult Test(string username)
+        {
+
+            var result = this.cursosServices.ObtenerCursosHabilitadosParaCursar(username);
+
+            return Ok(result);
+        }
     }
 }
