@@ -10,9 +10,6 @@ namespace ApiREST.ServicesImp
     {
         private readonly SecurityDbContext dataProvider;
         private readonly IAlumnosServices alumnosServices;
-        private readonly IInscripcionCarreraService inscripcionCarreraService;
-        private readonly ICursosServices cursosServices;
-        private readonly IMateriasService materiasService;
 
         public InscripcionesMateriaService(SecurityDbContext context, IAlumnosServices _alumnosService) : base(context)
         {

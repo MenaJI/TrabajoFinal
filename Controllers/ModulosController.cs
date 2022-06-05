@@ -36,7 +36,7 @@ namespace ApiREST.Controllers
         {
             modulosService.Insert(modulo);
 
-            return Ok();
+            return Ok(modulo);
         }
 
         [HttpPut("ChangeItem")]
@@ -44,7 +44,7 @@ namespace ApiREST.Controllers
         {
             modulosService.Update(modulo);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]

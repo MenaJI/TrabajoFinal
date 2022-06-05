@@ -146,8 +146,8 @@ namespace ApiREST.ServicesImp
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
             context.SaveChanges();
-
         }
+
         public virtual IEnumerable<TEntity> GetAsNoTracking(Func<TEntity, bool> query)
         {
             IQueryable<TEntity> dbset = dbSet.AsNoTracking();

@@ -38,14 +38,15 @@ namespace ApiREST.Controllers
         public IActionResult GetAll()
         {
             var inscripciones = InscripcionMateriaService.Get("Curso,Materias,Alumno,Condicion");
+            var inscripcionesNoAnuladas = inscripciones.Where(x => x.Estado != "ANULADA");
 
-            foreach (var inscripcion in inscripciones)
+            foreach (var inscripcion in inscripcionesNoAnuladas)
             {
                 inscripcion.Materias.Carrera = carrerasService.GetByID(inscripcion.Materias.Fk_Carrera);
                 inscripcion.Materias.Anio = aniosService.GetByID(inscripcion.Materias.Fk_Anio);
             }
 
-            return Ok(inscripciones);
+            return Ok(inscripcionesNoAnuladas);
         }
 
         [HttpGet("CambiarEstadoInscripcion")]
