@@ -3,6 +3,7 @@ using System.Linq;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
 using ApiREST.Services;
+using ApiREST.Models;
 
 namespace ApiREST.ServicesImp
 {
@@ -19,5 +20,9 @@ namespace ApiREST.ServicesImp
         //     IQueryable<InscripcionCarrera> Query = 
         // }
 
+        public DetalleInscripcionCarrera ObtenerDetallesInscripcionCarrera(int IdInscripcion){
+            
+            return null;
+        }
     }
 }
