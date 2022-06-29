@@ -5,6 +5,9 @@ namespace ApiREST.Services
 {
     public interface ICursosServices : IBaseServices<Cursos>
     {
-        public List<Cursos> ObtenerCursosHabilitadosParaCursar(string username);
+        public List<Cursos> ObtenerCursosDisponibles(string username);
+        public InscripcionesMateria RealizarInscripcion(int cursoId, string username);
+
+        void InscripcionesAutomaticasPrimerAño(Alumnos alumno, Carreras carreras);
     }
 }

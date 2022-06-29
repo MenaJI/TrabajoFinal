@@ -5,6 +5,7 @@ using ApiREST.DataProvider;
 using ApiREST.Entities;
 using ApiREST.Services;
 
+
 namespace ApiREST.ServicesImp
 {
     public class CursosServices : BaseServicesImp<Cursos>, ICursosServices
@@ -36,7 +37,7 @@ namespace ApiREST.ServicesImp
             dataProvider = context;
         }
 
-        public List<Cursos> ObtenerCursosHabilitadosParaCursar(string username)
+        public List<Cursos> ObtenerCursosDisponibles(string username)
         {
             List<InscripcionesMateria> listaDeInscripcionesPosibles = new List<InscripcionesMateria>();
             List<Cursos> CursosHabilitadosParaCursar = new List<Cursos>();
@@ -98,9 +99,45 @@ namespace ApiREST.ServicesImp
         }
 
         // Inscribe automaticamente a todas las materias de primer año de la 
-        public void InscripcionesAutomaticasPrimerAño(string username)
+        public void InscripcionesAutomaticasPrimerAño(Alumnos alumno, Carreras carrera)
         {
+            var listaCursadoPrimerAnio = Get(c => c.FechaInicio.Year == DateTime.Now.Year && c.Anio == 1, "Materia");
+            var condicion = dataProvider.Condiciones.FirstOrDefault(c => c.Descrip == "REGULAR");
+            foreach (var curso in listaCursadoPrimerAnio){
+                dataProvider.InscripcionesMateria.Add(
+                    new InscripcionesMateria(){
+                        Alumno = alumno,
+                        Materias = curso.Materia,
+                        Curso = curso,
+                        Fecha = DateTime.Now,
+                        Condicion = condicion,
+                        Estado = "CONFIRMADA",
+                    }
+                );
+            }
+        }
 
+        public InscripcionesMateria RealizarInscripcion(int cursoId, string username)
+        {
+            var alumno = alumnosServices.Get(a => a.NombreUsuario == username, "").FirstOrDefault();
+            var curso = Get(c => c.Id == cursoId, "Materia").FirstOrDefault();
+            var condicion = dataProvider.Condiciones.FirstOrDefault( condicion => condicion.Descrip == "REGULAR");
+
+
+            var nuevaInscripcion = new InscripcionesMateria(){
+                Alumno = alumno,
+                Curso = curso,
+                Fecha = DateTime.Now,
+                Activo = true,
+                Condicion = condicion,
+                Estado = "PENDIENTE",
+                Materias = curso.Materia,
+            };
+
+            dataProvider.InscripcionesMateria.Add(nuevaInscripcion);
+            dataProvider.SaveChanges();
+
+            return nuevaInscripcion;
         }
     }
 }

@@ -74,6 +74,8 @@ namespace ApiREST
             services.AddScoped<IMateriasService, MateriasServices>();
             services.AddScoped<ICursosServices, CursosServices>();
             services.AddScoped<IDocentesServices, DocentesServices>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
 
             // Para usar Identity  

@@ -10,23 +10,24 @@ namespace ApiREST.Controllers
     [ApiController]
     [Route("api/{controller}")]
 
-    public class InscripcionController : ControllerBase
+    public class InscripcionCarrerasController : ControllerBase
     {
 
         private IInscripcionCarreraService inscripcionCarreraService;
-        private IUsuariosService usuariosService;
         private IAlumnosServices alumnosServices;
         private ICarrerasService carrerasService;
-        private ISecurityDbContext securityDbContext;
+        private ICursosServices cursosServices;
 
-        public InscripcionController(IInscripcionCarreraService inscripcionCarreraService_
+        public InscripcionCarrerasController(IInscripcionCarreraService inscripcionCarreraService_
         , IAlumnosServices alumnosServices_
-        , ICarrerasService carrerasService_)
+        , ICarrerasService carrerasService_
+        , ICursosServices cursosServices_)
         {
 
             inscripcionCarreraService = inscripcionCarreraService_;
             alumnosServices = alumnosServices_;
             carrerasService = carrerasService_;
+            cursosServices = cursosServices_;
         }
 
         [HttpGet("GetAll")]
@@ -50,7 +51,7 @@ namespace ApiREST.Controllers
                 string.IsNullOrEmpty(dni) &&
                 string.IsNullOrEmpty(carrera) &&
                 string.IsNullOrEmpty(estado))
-                return Ok(inscripcionCarreraService.Get("Carrera"));
+                return Ok(inscripcionCarreraService.Get("Curso"));
 
             if (double.TryParse(dni, out var doubleDNI))
                 alumnoDNI = doubleDNI;
@@ -77,7 +78,7 @@ namespace ApiREST.Controllers
 
             if (!string.IsNullOrEmpty(estado) && result.Any())
                 result = result.Where(ic => ic.Estado == estado).ToList();
-            else
+            else if (!string.IsNullOrEmpty(estado))
                 result.AddRange(inscripcionCarreraService.Get(ic => ic.Estado == estado, "Carrera"));
 
             return Ok(result);
@@ -87,11 +88,16 @@ namespace ApiREST.Controllers
         public ActionResult CambiarEstadoInscripcionCarrera(int idInscripcion, string estado)
         {
             InscripcionCarrera result = null;
+            var alumno = alumnosServices.Get(a => a.InscripcionCarreras.Any(c => c.Id == idInscripcion), "InscripcionCarreras").FirstOrDefault();
             result = inscripcionCarreraService.Get(x => x.Id == idInscripcion, "Carrera").FirstOrDefault();
             if (!string.IsNullOrEmpty(estado) && result != null)
             {
+                var estadoPrevio = result.Estado;
                 result.Estado = estado;
                 inscripcionCarreraService.Update(result);
+
+                if (estadoPrevio == "PENDIENTE" && estado == "APROBADA")
+                    cursosServices.InscripcionesAutomaticasPrimerAño(alumno, result.Carrera);
             }
 
             return Ok(result);

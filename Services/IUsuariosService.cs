@@ -10,7 +10,8 @@ namespace ApiREST.Services
     {
         List<Usuarios> GetAll();
         Task<TokenModel> Login(LoginModel model);
-        Task<Response> RegistrarUsuario(RegistroModel model);
+        Task<Response> RegistrarUsuario(RegistroModel model, string rol);
         void BorrarUsuario(UsuarioModel usuario);
+        Task<bool> VerificarUsuario(string userCode);
     }
 }

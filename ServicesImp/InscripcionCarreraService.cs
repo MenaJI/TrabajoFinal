@@ -11,16 +11,13 @@ namespace ApiREST.ServicesImp
     {
         private readonly SecurityDbContext dataProvider;
         private readonly IAlumnosServices alumnosServices;
+        private readonly CamposService camposService;
 
         public InscripcionCarreraService(SecurityDbContext context, IAlumnosServices _alumnosServices) : base(context)
         {
             dataProvider = context;
             alumnosServices = _alumnosServices;
         }
-
-        // public IEnumerable<InscripcionCarrera> obtenerInscripcionesCarrera(int Id, string Propiedades){
-        //     IQueryable<InscripcionCarrera> Query = 
-        // }
 
         public DetalleInscripcionCarrera ObtenerDetallesInscripcionCarrera(int IdInscripcion){
             

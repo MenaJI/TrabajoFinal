@@ -9,5 +9,7 @@ namespace ApiREST.Models
         public string Rol { get; set; }
 
         public string NombreUsuario { get; set; }
+
+        public string Status { get; set; }
     }
 }

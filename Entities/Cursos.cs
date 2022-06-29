@@ -13,6 +13,8 @@ namespace ApiREST.Entities
         public bool Activa { get; set; }
         public int Cupos { get; set; }
 
+        public int Anio { get; set; }
+
         public DateTime FechaInicio { get; set; }
 
         public DateTime FechaFin { get; set; }

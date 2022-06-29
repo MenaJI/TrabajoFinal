@@ -6,6 +6,6 @@ namespace ApiREST.Services
 {
     public interface IInscripcionesMateriaService : IBaseServices<InscripcionesMateria>
     {
-
+        List<InscripcionesMateria> ObtenerInscripcionesValidas(string username);
     }
 }

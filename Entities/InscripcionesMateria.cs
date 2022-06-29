@@ -17,5 +17,8 @@ namespace ApiREST.Entities
         public int Fk_Condicion { get; set; }
         public Condiciones Condicion { get; set; }
         public string Estado { get; set; }
+        
+        [NotMapped]
+        public string CarreraNombre {get;set;}
     }
 }

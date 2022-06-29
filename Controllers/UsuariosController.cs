@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ApiREST.Models;
 using ApiREST.Services;
@@ -11,10 +12,12 @@ namespace ApiREST.Controllers
     {
 
         public IUsuariosService usuariosService;
+        public IEmailService emailService;
 
-        public UsuariosController(IUsuariosService _usuariosServices)
+        public UsuariosController(IUsuariosService _usuariosServices, IEmailService _emailService)
         {
             usuariosService = _usuariosServices;
+            emailService = _emailService;
         }
 
         [HttpGet("GelAll")]
@@ -37,13 +40,35 @@ namespace ApiREST.Controllers
         }
 
         [HttpPost("RegistrarUsuario")]
-        public async Task<IActionResult> Registro([FromBody] RegistroModel model)
+        public async Task<IActionResult> Registro([FromBody] RegistroModel model, string rol = "Alumno")
         {
 
-            var result = await usuariosService.RegistrarUsuario(model);
+            var result = await usuariosService.RegistrarUsuario(model, rol);
 
             return Ok(result);
         }
 
+        [HttpPost("send")]
+        public async Task<IActionResult> SendMail([FromForm]MailRequest request)
+        {
+            try
+            {
+                await emailService.SendEmailAsync(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+                
+        }
+
+        [HttpGet("VerificarUsuario")]
+        public async Task<IActionResult> VerificarUsuario(string userCode){
+            
+            var result = await usuariosService.VerificarUsuario(userCode);
+            
+            return Ok();
+        }
     }
 }

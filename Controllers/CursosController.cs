@@ -84,11 +84,11 @@ namespace ApiREST.Controllers
             return Ok();
         }
 
-        [HttpGet("test")]
-        public ActionResult Test(string username)
+        [HttpGet("ObtenerCursosDisponibles")]
+        public ActionResult ObtenerCursosDisponibles(string username)
         {
 
-            var result = this.cursosServices.ObtenerCursosHabilitadosParaCursar(username);
+            var result = this.cursosServices.ObtenerCursosDisponibles(username);
 
             return Ok(result);
         }

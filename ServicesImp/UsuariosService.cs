@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Linq;
 using AutoMapper;
+using System.Security.Cryptography;
 
 namespace ApiREST.ServicesImp
 {
@@ -21,14 +22,16 @@ namespace ApiREST.ServicesImp
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
         private readonly IMapper iMapper;
+        private readonly IEmailService emailService;
 
         public UsuariosService(UserManager<Usuarios> _userManager,
-         RoleManager<IdentityRole> _roleManager, IConfiguration _configuration, IMapper _iMapper)
+         RoleManager<IdentityRole> _roleManager, IConfiguration _configuration, IMapper _iMapper, IEmailService _emailService)
         {
             userManager = _userManager;
             roleManager = _roleManager;
             configuration = _configuration;
             iMapper = _iMapper;
+            emailService = _emailService;
         }
 
         public void BorrarUsuario(UsuarioModel usuario)
@@ -56,8 +59,13 @@ namespace ApiREST.ServicesImp
         public async Task<TokenModel> Login(LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.nombreusuario);
+            if (user == null)
+                user = await this.userManager.FindByEmailAsync(model.nombreusuario);
 
             TokenModel result = null;
+
+            if (!user.EmailConfirmed)
+                return result;
 
             if (user != null && await userManager.CheckPasswordAsync(user, model.contraseña))
             {
@@ -92,7 +100,8 @@ namespace ApiREST.ServicesImp
                 {
                     Token = new JwtSecurityTokenHandler().WriteToken(token),
                     NombreUsuario = user.UserName,
-                    Rol = roles
+                    Rol = roles,
+                    Status = "OK"
                 };
 
                 return result;
@@ -101,10 +110,18 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Response> RegistrarUsuario(RegistroModel model)
+        public async Task<Response> RegistrarUsuario(RegistroModel model, string Rol = "")
         {
             try
             {
+                var codigoVerificacion = Encriptador.EncryptString(model.Email);
+
+                await emailService.SendEmailAsync(new MailRequest(){
+                    ToEmail = model.Email,
+                    Subject = "Verificacion de contraseña",
+                    Body = $"<a> https://localhost:5001/api/Usuarios/VerificarUsuario?userCode={codigoVerificacion} </a>",
+                });
+
                 var userExists = await userManager.FindByNameAsync(model.NombreUsuario);
 
                 if (userExists != null)
@@ -112,7 +129,7 @@ namespace ApiREST.ServicesImp
                     return new Response() { Status = "Error", Message = "El usuario ya existe." };
                 }
 
-                var rolBase = roleManager.Roles.FirstOrDefault(r => r.Name == "Alumno");
+                var rolBase = roleManager.Roles.FirstOrDefault(r => r.Name == Rol);
 
                 if (rolBase == null)
                 {
@@ -135,6 +152,7 @@ namespace ApiREST.ServicesImp
 
                 await userManager.AddToRoleAsync(usuario, rolBase.ToString());
 
+                
                 return new Response { Status = "Success", Message = "El usuario fue creado con exito." };
 
             }
@@ -142,6 +160,20 @@ namespace ApiREST.ServicesImp
             {
                 return new Response() { Status = "Error", Message = ex.InnerException.Message };
             }
+        }
+
+        public async Task<bool> VerificarUsuario(string userCode)
+        {
+            var userEmail = Encriptador.DecryptString(userCode);
+            var user = await this.userManager.FindByEmailAsync(userEmail);
+
+            if (user == null)
+                return false;
+
+            user.EmailConfirmed = true;
+            await this.userManager.UpdateAsync(user);
+
+            return true;
         }
     }
 }
