@@ -12,6 +12,7 @@ namespace ApiREST.Services
         Task<TokenModel> Login(LoginModel model);
         Task<Response> RegistrarUsuario(RegistroModel model, string rol);
         void BorrarUsuario(UsuarioModel usuario);
-        Task<bool> VerificarUsuario(string userCode);
+        Task<Response> RecuperarContrasenia(string userIdentification, string direccion);
+        Task<Response> CambiarContrasenia(string userIdentification, string nuevaContrasenia);
     }
 }

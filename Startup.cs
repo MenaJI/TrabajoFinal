@@ -75,6 +75,7 @@ namespace ApiREST
             services.AddScoped<ICursosServices, CursosServices>();
             services.AddScoped<IDocentesServices, DocentesServices>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IInscripcionesMateriaService, InscripcionesMateriaService>();
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
 

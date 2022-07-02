@@ -56,6 +56,29 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
+        public async Task<Response> RecuperarContrasenia(string userIdentification, string direccion){
+
+            var user = await userManager.FindByNameAsync(userIdentification);
+            if (user == null)
+                user = await this.userManager.FindByEmailAsync(userIdentification);
+
+            if (user == null)
+                return new Response(){ Status = "Error", Message = "Correo o nombre de usuario incorrecto." };
+
+            var result = new Response();
+
+            await emailService.SendEmailAsync(new MailRequest(){
+                ToEmail = user.Email,
+                Subject = "Recuperar contraseña",
+                Body = $"Para recuperar contraseña hace click <a href='http://localhost:4200/usuario/cambiar-contrasenia?userName={user.UserName}'>aqui!</a>",
+            });
+            
+            result.Status = "Ok";
+            result.Message = "Correo electronico enviado correectamente.";
+
+            return result;
+        }
+
         public async Task<TokenModel> Login(LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.nombreusuario);
@@ -141,6 +164,7 @@ namespace ApiREST.ServicesImp
                     Email = model.Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = model.NombreUsuario,
+                    Contrasenia = model.Contraseña,
                 };
 
                 var result = await userManager.CreateAsync(usuario, model.Contraseña);
@@ -162,18 +186,24 @@ namespace ApiREST.ServicesImp
             }
         }
 
-        public async Task<bool> VerificarUsuario(string userCode)
+        public async Task<Response> CambiarContrasenia(string userIdentification, string nuevaContrasenia)
         {
-            var userEmail = Encriptador.DecryptString(userCode);
-            var user = await this.userManager.FindByEmailAsync(userEmail);
-
+            var user = await userManager.FindByNameAsync(userIdentification);
+            var contrasenia = user.Contrasenia;
             if (user == null)
-                return false;
+                return new Response();
 
-            user.EmailConfirmed = true;
-            await this.userManager.UpdateAsync(user);
+            await userManager.ChangePasswordAsync(user,user.Contrasenia,nuevaContrasenia);
 
-            return true;
+            user.Contrasenia = nuevaContrasenia;
+            await userManager.UpdateAsync(user);
+
+            var response = new Response(){
+                Status = "OK",
+                Message = "Se cambio la contraseña correctamente."
+            };
+
+            return response;
         }
     }
 }

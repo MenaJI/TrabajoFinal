@@ -102,6 +102,26 @@ namespace ApiREST.Controllers
             return Ok();
         }
 
+        [HttpGet("GetByUserName")]
+        public IActionResult GetByUserName (string username){
+            var im = InscripcionMateriaService.GetByUserName(username);
+            
+            if (im == null || !im.Any())
+                return Ok(new InscripcionesMateriaModel(){ Status = "Error", Mensaje = "Ocurrio un problema al obtener las inscripciones a materias."});
+
+            var result = new InscripcionesMateriaModel(){
+                Status = "Ok",
+                listaInscripciones = im,
+            };
+
+            return Ok(result);
+        }
+
+        [HttpPost("AddLegacyIM")]
+        public IActionResult AddLegacyIM (LegacyIMModel model){
+            return Ok();
+        }
+
         [HttpGet("GetByFiltro")]
         public IActionResult GetByFiltro(string nombreApellido = "", string dni = "", string carrera = "", string condicion = "")
         {

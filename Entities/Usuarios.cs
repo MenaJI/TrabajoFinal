@@ -6,5 +6,6 @@ namespace ApiREST.Entities
 {
     public class Usuarios : IdentityUser
     {
+        public string Contrasenia { get; set; }
     }
 }
