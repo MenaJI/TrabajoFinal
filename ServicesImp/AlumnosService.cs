@@ -15,6 +15,7 @@ namespace ApiREST.ServicesImp
         private readonly SecurityDbContext dataProvider;
         // private readonly UserManager<Usuarios> userManager;
         // private readonly RoleManager<IdentityRole> roleManager;
+        
         public AlumnosService(SecurityDbContext context) : base(context)
         {
             dataProvider = context;
@@ -103,6 +104,40 @@ namespace ApiREST.ServicesImp
             };
 
             return result;
+        }
+
+        public ValidacionResponse VerificarDatosAlumnos(string userName)
+        {
+            var alumno = Get(x => x.NombreUsuario == userName,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var validacion = new ValidacionResponse();
+            if (alumno == null || !ValidarAlumno(alumno))
+                return validacion;
+            
+            if (!alumno.InscripcionCarreras.Any())
+                return validacion;
+
+            var archivos = dataProvider.Archivos.Where(x => x.AlumnoUserName == userName);
+
+            if (archivos.Any( x => x.TipoArchivo == ""))
+                return validacion;
+
+            if (archivos.Any( x => x.TipoArchivo == ""))
+                return validacion;
+
+            if (archivos.Any( x => x.TipoArchivo == ""))
+                return validacion;
+
+            return validacion;    
+        }
+
+        private bool ValidarAlumno(Alumnos alumno)
+        {
+            if (string.IsNullOrEmpty(alumno.Nombre) ||
+                string.IsNullOrEmpty(alumno.Apellido) ||
+                alumno.NroDocumento != 0)
+                return false;
+            
+            return true;
         }
     }
 }

@@ -80,6 +80,14 @@ namespace ApiREST.Controllers
             return NotFound();
         }
 
+        [HttpGet("VerificarDatosAlumno")]
+        public IActionResult VerificarDatosAlumnos(string userName){
+            
+            var result = alumnosServices.VerificarDatosAlumnos(userName);
+
+            return Ok(result);
+        }
+
         [HttpGet("AgregarIC")]
         public IActionResult AgregarIC(string UserName, string Carrera, string Estado)
         {
@@ -91,7 +99,9 @@ namespace ApiREST.Controllers
                 alumno.InscripcionCarreras.Add(new InscripcionCarrera()
                 {
                     Carrera = carrera,
-                    Estado = Estado
+                    Estado = Estado,
+                    DeLegado = false,
+                    FechaInscripcion = DateTime.Now,
                 });
                 alumnosServices.Update(alumno);
                 return Ok(alumnosServices.MapearAlumnoModel(alumno));

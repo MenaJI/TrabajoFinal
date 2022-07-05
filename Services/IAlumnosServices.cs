@@ -10,5 +10,7 @@ namespace ApiREST.Services
         Alumnos Insert(AlumnosModel model);
         AlumnosModel MapearAlumnoModel(Alumnos model);
         List<AlumnosModel> GetAll();
+
+        ValidacionResponse VerificarDatosAlumnos(string userName);
     }
 }

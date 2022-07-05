@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
+using ApiREST.Models;
 using ApiREST.Services;
 
 
@@ -50,7 +51,7 @@ namespace ApiREST.ServicesImp
 
             // Filtrar primero por las inscripciones a carrera que tenga el Alumno, que este activo 
             // y la fecha (tiene que traer los cursos del respectivo año).
-            var cursosPosibles = Get(curso => alumno.InscripcionCarreras.Any(carrera => carrera.Fk_Carrera == curso.Materia.Fk_Carrera && carrera.Estado == "CONFIRMADA")
+            var cursosPosibles = Get(curso => alumno.InscripcionCarreras.Any(carrera => carrera.Fk_Carrera == curso.Materia.Fk_Carrera && carrera.Estado == "CONFIRMADA" && carrera.DeLegado == false)
             && curso.FechaFin.Year > DateTime.Now.Year && curso.Activa == true, "Formato,Aula,Materia,CondicionCurso");
 
             if (cursosPosibles == null)
@@ -138,6 +139,19 @@ namespace ApiREST.ServicesImp
             dataProvider.SaveChanges();
 
             return nuevaInscripcion;
+        }
+
+        public List<Cursos> ObtenerCursosByFiltro(CursosFilterModel model)
+        {
+            var cursos = Get("Formato,Aula,Materia,CondicionCurso").ToList();
+
+            cursos.ForEach( x => {
+                x.Materia = materiasService.Get(m => m.Id == x.Fk_Materia,"Anio,Regimen,Campo,Carrera").FirstOrDefault();
+            });
+
+
+
+            return cursos.Where(x => x.Materia.Carrera.Id == model.carrera.Id && x.Materia.Anio.Id == model.anio.Id).ToList();
         }
     }
 }

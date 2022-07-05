@@ -3,6 +3,7 @@ using ApiREST.Entities;
 using ApiREST.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using ApiREST.Models;
 
 namespace ApiREST.Controllers
 {
@@ -83,6 +84,15 @@ namespace ApiREST.Controllers
 
             return Ok();
         }
+
+        [HttpPost("ObtenerCursosByFiltro")]
+        public ActionResult ObtenerCursosByFiltro([FromBody] CursosFilterModel model){
+            
+            List<Cursos> result = cursosServices.ObtenerCursosByFiltro(model);
+
+            return Ok(result);
+        }
+
 
         [HttpGet("ObtenerCursosDisponibles")]
         public ActionResult ObtenerCursosDisponibles(string username)

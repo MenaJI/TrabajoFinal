@@ -12,8 +12,10 @@ namespace ApiREST.Entities
         public string Estado { get; set; }
         
         public Carreras Carrera { get; set; }
-
+        
         [NotMapped]
-        public DateTime Anio { get;set; }
+        public DateTime FechaInscripcion { get;set; }
+        [NotMapped]
+        public bool DeLegado { get;set; }
     }
 }

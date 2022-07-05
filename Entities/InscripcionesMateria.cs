@@ -20,5 +20,6 @@ namespace ApiREST.Entities
         
         [NotMapped]
         public string CarreraNombre {get;set;}
+        
     }
 }

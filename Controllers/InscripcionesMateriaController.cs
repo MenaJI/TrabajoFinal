@@ -19,6 +19,7 @@ namespace ApiREST.Controllers
         private ICursosServices cursosServices;
         private IMateriasService materiasService;
         private ICondicionesService condicionesService;
+        private IInscripcionCarreraService inscripcionCarreraService;
 
         public InscripcionesMateriaController(IInscripcionesMateriaService InscripcionMateriaService_,
         ICarrerasService _carrerasService,
@@ -26,7 +27,8 @@ namespace ApiREST.Controllers
         IAlumnosServices _alumnoService,
         ICursosServices _cursosService,
         IMateriasService _materiasService,
-        ICondicionesService _condicionService)
+        ICondicionesService _condicionService,
+        IInscripcionCarreraService _inscripcionCarrera)
         {
             InscripcionMateriaService = InscripcionMateriaService_;
             carrerasService = _carrerasService;
@@ -35,6 +37,7 @@ namespace ApiREST.Controllers
             cursosServices = _cursosService;
             materiasService = _materiasService;
             condicionesService = _condicionService;
+            inscripcionCarreraService = _inscripcionCarrera;
         }
 
         [HttpGet("GetAll")]
@@ -81,25 +84,45 @@ namespace ApiREST.Controllers
             return Ok();
         }
 
-        [HttpGet("AddInscripcion")]
-        public IActionResult AddItem(string username, int id, string estado)
+        [HttpPost("AddInscripcion")]
+        public IActionResult AddItem([FromBody]InscripcionesMateriasModel model)
         {
-            var curso = cursosServices.GetByID(id);
-            var inscripcion = new InscripcionesMateria()
-            {
-                Fecha = DateTime.Now,
-                Activo = true,
-                Fk_Alumno = alumnosServices.Get(a => a.NombreUsuario == username, "").FirstOrDefault().Id,
-                Fk_Curso = id,
-                Fk_Condicion = curso.Fk_CondicionCurso,
-                Materias = materiasService.GetByID(curso.Fk_Materia),
-                Estado = estado
+            var alumno = alumnosServices.Get(x => x.NombreUsuario == model.userName,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            
+            alumno.InscripcionCarreras.ForEach(i => {
+                i = inscripcionCarreraService.Get(x => x.Id == i.Id,"Carrera").FirstOrDefault();
+                });
 
-            };
+            model.cursos.ForEach(c => {
+                c = cursosServices.GetByID(c.Id);
+                c.Materia = materiasService.Get( m => m.Id == c.Fk_Materia,"").FirstOrDefault();
+            });
 
-            InscripcionMateriaService.Insert(inscripcion);
+            foreach (var curso in model.cursos){
+                if (!alumno.InscripcionCarreras.Any(i => i.Fk_Carrera == curso.Materia.Fk_Carrera))
+                    alumno.InscripcionCarreras.Add(inscripcionCarreraService.Insert(new InscripcionCarrera(){
+                        Carrera = carrerasService.GetByID(curso.Materia.Fk_Carrera),
+                        Estado = model.estado,
+                        FechaInscripcion = DateTime.Now
+                    }));
+                
+                var inscripcionAlumno = InscripcionMateriaService.Get(x => x.Alumno == alumno, "Curso,Alumno,Condicion,Materias");
 
-            return Ok();
+                if (!inscripcionAlumno.Any(x => x.Fk_Curso == curso.Id))
+                    InscripcionMateriaService.Insert(new InscripcionesMateria(){
+                        Fecha = DateTime.Now,
+                        Activo = true,
+                        Alumno = alumno,
+                        Curso = curso,
+                        Materias = materiasService.GetByID(curso.Fk_Materia),
+                        Estado = "NUEVA"
+                    });
+            }
+
+            return Ok(new Response(){
+                Status = "Ok",
+                Message = "Se ha realizado la operacion con exito."
+            });
         }
 
         [HttpGet("GetByUserName")]
@@ -115,11 +138,6 @@ namespace ApiREST.Controllers
             };
 
             return Ok(result);
-        }
-
-        [HttpPost("AddLegacyIM")]
-        public IActionResult AddLegacyIM (LegacyIMModel model){
-            return Ok();
         }
 
         [HttpGet("GetByFiltro")]
