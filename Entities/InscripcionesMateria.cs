@@ -18,6 +18,8 @@ namespace ApiREST.Entities
         public Condiciones Condicion { get; set; }
         public string Estado { get; set; }
         
+        // public int MateriaId { get; set; }
+
         [NotMapped]
         public string CarreraNombre {get;set;}
         

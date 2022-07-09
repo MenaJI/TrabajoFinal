@@ -89,6 +89,12 @@ namespace ApiREST.Controllers
         {
             var alumno = alumnosServices.Get(x => x.NombreUsuario == model.userName,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
             
+            if (alumno == null)
+                return Ok(new Response(){
+                    Status = "Error",
+                    Message = "Ocurrio un problema al intentar obtener el usuario."
+                });
+
             alumno.InscripcionCarreras.ForEach(i => {
                 i = inscripcionCarreraService.Get(x => x.Id == i.Id,"Carrera").FirstOrDefault();
                 });
@@ -97,14 +103,8 @@ namespace ApiREST.Controllers
                 c = cursosServices.GetByID(c.Id);
                 c.Materia = materiasService.Get( m => m.Id == c.Fk_Materia,"").FirstOrDefault();
             });
-
+            
             foreach (var curso in model.cursos){
-                if (!alumno.InscripcionCarreras.Any(i => i.Fk_Carrera == curso.Materia.Fk_Carrera))
-                    alumno.InscripcionCarreras.Add(inscripcionCarreraService.Insert(new InscripcionCarrera(){
-                        Carrera = carrerasService.GetByID(curso.Materia.Fk_Carrera),
-                        Estado = model.estado,
-                        FechaInscripcion = DateTime.Now
-                    }));
                 
                 var inscripcionAlumno = InscripcionMateriaService.Get(x => x.Alumno == alumno, "Curso,Alumno,Condicion,Materias");
 
@@ -136,6 +136,14 @@ namespace ApiREST.Controllers
                 Status = "Ok",
                 listaInscripciones = im,
             };
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetDetalleInscripcion")]
+        public IActionResult GetDetalleInscripcion(int id){
+            
+            var result = InscripcionMateriaService.GetDetalleInscripcion(id);
 
             return Ok(result);
         }

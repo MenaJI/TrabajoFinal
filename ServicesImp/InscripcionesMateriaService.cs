@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApiREST.DataProvider;
 using ApiREST.Entities;
+using ApiREST.Models;
 using ApiREST.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,6 +67,51 @@ namespace ApiREST.ServicesImp
                 
 
             return InscripcionesMateria;
+        }
+
+        public DetalleInscripcionMateriaModel GetDetalleInscripcion(int id)
+        {
+            DetalleInscripcionMateriaModel result = null;
+            var materiasCorrelativas = new List<string>();
+            var inscripcion = Get(i => i.Id == id, "Curso,Materias,Alumno,Condicion").FirstOrDefault();
+
+            if (inscripcion == null)
+                return null;
+
+            var alumno = alumnosServices.Get(x => x.Id == inscripcion.Fk_Alumno, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            if (alumno == null)
+                return null;
+
+            var materia = dataProvider.Materias.Include("Anio")
+                                                .Include("Regimen")
+                                                .Include("Campo")
+                                                .Include("Carrera")
+                                                .FirstOrDefault(x => x.Id == inscripcion.Materias.Id);
+            if (materia == null)
+                return null;
+
+            materia.MateriasCorrelativas.Split(',').ToList().ForEach(x => {
+                if (Int32.TryParse(x, out var result))
+                    materiasCorrelativas.Add(dataProvider.Materias.FirstOrDefault(m => m.Id == result).Descrip);
+            });
+
+            if (alumno != null)
+                result = new DetalleInscripcionMateriaModel(){
+                    UserNameAlumno = alumno.NombreUsuario,
+                    NombreAlumno = alumno.Nombre,
+                    ApellidoAlumno = alumno.Apellido,
+                    NumeroDocumento = alumno.NroDocumento.ToString(),
+                    TipoDocumento = alumno.TipoDoc.Descrip,
+                    GeneroAlumno = alumno.Genero.Descrip,
+                    Localidad = alumno.Localidad.Descrip,
+                    EstadoCivil = alumno.EstadoCivil.Descrip,
+                    Nacionalidad = alumno.Nacionalidad.Descrip,
+                    CarreraNombre = materia.Carrera.Descripcion,
+                    MateriasCorrelativas = materiasCorrelativas,
+                };
+
+
+            return result;
         }
 
         public List<InscripcionesMateria> ObtenerInscripcionesValidas(string username)
