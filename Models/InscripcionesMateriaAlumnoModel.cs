@@ -3,7 +3,7 @@ using ApiREST.Entities;
 
 namespace ApiREST.Models
 {
-    public class InscripcionesMateriaModel
+    public class InscripcionesMateriaAlumnoModel
     {
         public string Status { get; set; }
         public string Mensaje {get;set;}

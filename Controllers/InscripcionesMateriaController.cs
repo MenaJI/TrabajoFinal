@@ -69,25 +69,25 @@ namespace ApiREST.Controllers
             return Ok();
         }
 
-        [HttpGet("CambiarCondicionInscripcion")]
-        public IActionResult CambiarCondicionInscripcion(int inscripcionId, string condicionDescrip)
-        {
-            var inscripcion = InscripcionMateriaService.GetByID(inscripcionId);
-            var condicion = condicionesService.Get(x => x.Descrip == condicionDescrip, "").FirstOrDefault();
-            if (inscripcion != null)
-            {
-                inscripcion.Condicion = condicion;
-            }
+        // [HttpGet("CambiarCondicionInscripcion")]
+        // public IActionResult CambiarCondicionInscripcion(int inscripcionId, string condicionDescrip)
+        // {
+        //     var inscripcion = InscripcionMateriaService.GetByID(inscripcionId);
+        //     var condicion = condicionesService.Get(x => x.Descrip == condicionDescrip, "").FirstOrDefault();
+        //     if (inscripcion != null)
+        //     {
+        //         inscripcion.Condicion = condicion;
+        //     }
 
-            InscripcionMateriaService.Update(inscripcion);
+        //     InscripcionMateriaService.Update(inscripcion);
 
-            return Ok();
-        }
+        //     return Ok();
+        // }
 
         [HttpPost("AddInscripcion")]
         public IActionResult AddItem([FromBody]InscripcionesMateriasModel model)
         {
-            var alumno = alumnosServices.Get(x => x.NombreUsuario == model.userName,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(x => x.NombreUsuario == model.userName,"").FirstOrDefault();
             
             if (alumno == null)
                 return Ok(new Response(){
@@ -95,29 +95,18 @@ namespace ApiREST.Controllers
                     Message = "Ocurrio un problema al intentar obtener el usuario."
                 });
 
-            alumno.InscripcionCarreras.ForEach(i => {
-                i = inscripcionCarreraService.Get(x => x.Id == i.Id,"Carrera").FirstOrDefault();
-                });
-
-            model.cursos.ForEach(c => {
-                c = cursosServices.GetByID(c.Id);
-                c.Materia = materiasService.Get( m => m.Id == c.Fk_Materia,"").FirstOrDefault();
-            });
-            
-            foreach (var curso in model.cursos){
-                
-                var inscripcionAlumno = InscripcionMateriaService.Get(x => x.Alumno == alumno, "Curso,Alumno,Condicion,Materias");
-
-                if (!inscripcionAlumno.Any(x => x.Fk_Curso == curso.Id))
+            foreach (var curso in model.cursos.ToList()){
+                var inscripcionVigente = InscripcionMateriaService.Get(x => x.Fk_Curso == curso.Id && (x.Estado == "CONFIRMADA" || x.Estado == "PENDIENTE"), "");
+                if (!inscripcionVigente.Any())
                     InscripcionMateriaService.Insert(new InscripcionesMateria(){
                         Fecha = DateTime.Now,
                         Activo = true,
                         Alumno = alumno,
-                        Curso = curso,
-                        Materias = materiasService.GetByID(curso.Fk_Materia),
-                        Estado = "NUEVA"
+                        Curso = cursosServices.GetAsNoTracking(x => x.Id == curso.Id).FirstOrDefault(),
+                        Materias = materiasService.Get(x => x.Id == curso.Fk_Materia,"Anio,Campo,Carrera").FirstOrDefault(),
+                        Estado = "PENDIENTE"
                     });
-            }
+                }
 
             return Ok(new Response(){
                 Status = "Ok",
@@ -130,9 +119,9 @@ namespace ApiREST.Controllers
             var im = InscripcionMateriaService.GetByUserName(username);
             
             if (im == null || !im.Any())
-                return Ok(new InscripcionesMateriaModel(){ Status = "Error", Mensaje = "Ocurrio un problema al obtener las inscripciones a materias."});
+                return Ok(new InscripcionesMateriaAlumnoModel(){ Status = "Error", Mensaje = "Ocurrio un problema al obtener las inscripciones a materias."});
 
-            var result = new InscripcionesMateriaModel(){
+            var result = new InscripcionesMateriaAlumnoModel(){
                 Status = "Ok",
                 listaInscripciones = im,
             };
@@ -149,16 +138,13 @@ namespace ApiREST.Controllers
         }
 
         [HttpGet("GetByFiltro")]
-        public IActionResult GetByFiltro(string nombreApellido = "", string dni = "", string carrera = "", string condicion = "")
+        public IActionResult GetByFiltro(string nombreApellido = "", string dni = "", string carrera = "",string estado = "")
         {
             double alumnoDNI = 0;
             Alumnos alumno = null;
             Carreras _carrera = null;
-            Condiciones _condicion = null;
             List<InscripcionesMateria> result = new List<InscripcionesMateria>();
             
-            if (!string.IsNullOrEmpty(condicion))
-                _condicion = condicionesService.Get(x => x.Descrip == condicion, "").FirstOrDefault();
             if (double.TryParse(dni, out var doubleDNI))
                 alumnoDNI = doubleDNI;
             if (!string.IsNullOrEmpty(carrera))
@@ -166,9 +152,8 @@ namespace ApiREST.Controllers
 
             if (string.IsNullOrEmpty(nombreApellido) &&
                 string.IsNullOrEmpty(dni) &&
-                string.IsNullOrEmpty(carrera) &&
-                string.IsNullOrEmpty(condicion))
-                return Ok(InscripcionMateriaService.Get(x => x.Fk_Condicion == 1,"Curso,Alumno,Condicion,Materias"));
+                string.IsNullOrEmpty(carrera))
+                result = InscripcionMateriaService.Get(x => x.Estado == estado,"Curso,Alumno,Condicion,Materias").ToList();
 
             if (!string.IsNullOrEmpty(nombreApellido) || !string.IsNullOrEmpty(dni))
                 alumno = alumnosServices.Get(x => (x.NombreCompleto.Contains(nombreApellido)
@@ -193,12 +178,11 @@ namespace ApiREST.Controllers
                 var listMateriasPorCarrera = materiasService.Get(x => x.Fk_Carrera == _carrera.Id,"").ToList();
                 result.AddRange(InscripcionMateriaService.Get(x => listMateriasPorCarrera.Any( m => m.Id == x.Curso.Fk_Materia), "Curso,Alumno,Condicion,Materias"));
             }
-
-            if (_condicion != null && result.Any())
-                result = result.Where(ic => ic.Fk_Condicion == _condicion.Id).ToList();
-            else if (_condicion != null)
-                result.AddRange(InscripcionMateriaService.Get(ic => ic.Fk_Condicion == _condicion.Id, "Curso,Alumno,Condicion,Materias"));
             
+            if (result.Any()){
+                result = result.Where(x => x.Estado == estado).ToList();
+            }
+
             foreach(var im in result)
             {
                 _carrera = carrerasService.Get(x => x.Id == im.Materias.Fk_Carrera,"").FirstOrDefault();

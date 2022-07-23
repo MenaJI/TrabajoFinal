@@ -28,6 +28,28 @@ namespace ApiREST.Entities
         public int Fk_EstadoCivil { get; set; }
 
         public EstadosCiviles EstadoCivil { get; set; }
+
+        public bool PuebloOriginario { get; set; }
+
+        public string Etnia { get; set; }
+
+        public string Comunidad { get; set; }
+    
+        [Column("PaisNacimientoId")]
+        public Paises PaisNacimiento { get; set; }
+
+        public string Ocupacion { get; set; }
+
+        public bool Discapacidad { get; set; }
+
+        public string TipoDiscapacidad { get; set; }
+
+        [Column("DireccionOcupacionId")]
+        public Direcciones DireccionOcupacion { get; set; }
+
+        [Column("DireccionDomicilioId")]
+        public Direcciones DireccionDomicilio { get; set; }
+
         public string NombreUsuario { get; set; }
     }
 }

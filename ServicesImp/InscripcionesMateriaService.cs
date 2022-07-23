@@ -34,7 +34,7 @@ namespace ApiREST.ServicesImp
             if (alumno == null)
                 return null;
 
-            var InscripcionesMateria = Get(x => x.Fk_Alumno == alumno.Id,"Curso,Condicion").ToList();
+            var InscripcionesMateria = Get(x => x.Fk_Alumno == alumno.Id,"Curso").ToList();
             
             if (!InscripcionesMateria.Any() || InscripcionesMateria == null)
                 return null;
@@ -52,6 +52,8 @@ namespace ApiREST.ServicesImp
                     if (modulo != null)
                         inscripcion.Curso.Modulos.Add(modulo);
                 });
+
+                inscripcion.Curso.Materia = dataProvider.Materias.Include("Anio").Include("Regimen").Include("Campo").Include("Carrera").FirstOrDefault(x => x.Id == inscripcion.Curso.Fk_Materia);
 
                 var docentes = inscripcion.Curso.DocentesId.Split(',').ToList();
                 inscripcion.Curso.Docentes = new List<Docentes>();
@@ -73,7 +75,7 @@ namespace ApiREST.ServicesImp
         {
             DetalleInscripcionMateriaModel result = null;
             var materiasCorrelativas = new List<string>();
-            var inscripcion = Get(i => i.Id == id, "Curso,Materias,Alumno,Condicion").FirstOrDefault();
+            var inscripcion = Get(i => i.Id == id, "Curso,Materias,Alumno").FirstOrDefault();
 
             if (inscripcion == null)
                 return null;
@@ -122,7 +124,7 @@ namespace ApiREST.ServicesImp
             if (alumno == null)
                 return null;
 
-            var inscripcionesMateriasPrevias = Get(m => m.Fk_Alumno == alumno.Id, "Curso,Materias,Alumno,Condicion");
+            var inscripcionesMateriasPrevias = Get(m => m.Fk_Alumno == alumno.Id, "Curso,Materias,Alumno");
 
             return null;
         }

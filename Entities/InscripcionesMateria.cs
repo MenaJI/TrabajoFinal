@@ -12,12 +12,13 @@ namespace ApiREST.Entities
         public Materias Materias { get; set; }
         [ForeignKey("Alumno")] public int Fk_Alumno { get; set; }
         public Alumnos Alumno { get; set; }
-
+        public string Estado { get; set; }
+        
+        
         [ForeignKey("Condicion")]
         public int Fk_Condicion { get; set; }
         public Condiciones Condicion { get; set; }
-        public string Estado { get; set; }
-        
+
         // public int MateriaId { get; set; }
 
         [NotMapped]

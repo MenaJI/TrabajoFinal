@@ -15,11 +15,14 @@ namespace ApiREST.Controllers
         private IModulosService modulosService;
         private IDocentesServices docentesServices;
 
-        public CursosController(ICursosServices _cursosServices, IModulosService _modulosService, IDocentesServices _docentesService)
+        private IMateriasService materiasService;
+
+        public CursosController(ICursosServices _cursosServices, IModulosService _modulosService, IDocentesServices _docentesService, IMateriasService _materiasService)
         {
             cursosServices = _cursosServices;
             modulosService = _modulosService;
             docentesServices = _docentesService;
+            materiasService = _materiasService;
         }
 
         [HttpGet("GetAll")]
@@ -37,6 +40,8 @@ namespace ApiREST.Controllers
 
                     var docentesId = curso.DocentesId.Split(',');
                     curso.Docentes = docentesServices.Get(d => docentesId.Contains(d.Id.ToString()), "TipoDoc,Genero,Nacionalidad,EstadoCivil").ToList();
+
+                    curso.Materia = materiasService.Get(x => x.Id == curso.Fk_Materia, "Anio,Regimen,Campo,Carrera").FirstOrDefault();
                 }
             }
 
@@ -94,13 +99,13 @@ namespace ApiREST.Controllers
         }
 
 
-        [HttpGet("ObtenerCursosDisponibles")]
-        public ActionResult ObtenerCursosDisponibles(string username)
-        {
+        // [HttpGet("ObtenerCursosDisponibles")]
+        // public ActionResult ObtenerCursosDisponibles(string username)
+        // {
 
-            var result = this.cursosServices.ObtenerCursosDisponibles(username);
+        //     var result = this.cursosServices.ObtenerCursosDisponibles(username);
 
-            return Ok(result);
-        }
+        //     return Ok(result);
+        // }
     }
 }

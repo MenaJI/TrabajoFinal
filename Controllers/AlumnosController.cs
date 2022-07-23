@@ -62,7 +62,7 @@ namespace ApiREST.Controllers
         [HttpGet("GetUserAlumno")]
         public IActionResult GetUserAlumno(string UserName)
         {
-            var alumno = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil,PaisNacimiento,DireccionOcupacion,DireccionDomicilio").FirstOrDefault();
 
             if (alumno != null)
             {
@@ -91,7 +91,7 @@ namespace ApiREST.Controllers
         [HttpGet("AgregarIC")]
         public IActionResult AgregarIC(string UserName, string Carrera, string Estado)
         {
-            var alumno = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(a => a.NombreUsuario == UserName, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil,PaisNacimiento,DireccionOcupacion,DireccionDomicilio").FirstOrDefault();
             var carrera = carrerasService.Get(c => c.Descripcion == Carrera, "").FirstOrDefault();
 
             if (alumno != null && carrera != null)

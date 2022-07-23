@@ -5,9 +5,6 @@ namespace ApiREST.Entities
 {
     public class Alumnos : Personas
     {
-        public int CertificadoSaludId { get; set; }
-        public int CertificadoSecundariaId { get; set; }
-        public int FotoId { get; set; }
         public virtual List<InscripcionCarrera> InscripcionCarreras { get; set; }
 
         [NotMapped]
