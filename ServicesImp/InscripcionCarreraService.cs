@@ -11,8 +11,7 @@ namespace ApiREST.ServicesImp
     {
         private readonly SecurityDbContext dataProvider;
         private readonly IAlumnosServices alumnosServices;
-        private readonly CamposService camposService;
-
+        
         public InscripcionCarreraService(SecurityDbContext context, IAlumnosServices _alumnosServices) : base(context)
         {
             dataProvider = context;

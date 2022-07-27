@@ -41,7 +41,7 @@ namespace ApiREST.ServicesImp
 
             foreach(var inscripcion in InscripcionesMateria){
                 inscripcion.Alumno = alumno;
-                inscripcion.Curso = dataProvider.Cursos.Include("Materia").Include("CondicionCurso").Include("Formato").Include("Aula").FirstOrDefault(x => x.Id == inscripcion.Fk_Curso);
+                inscripcion.Curso = dataProvider.Cursos.Include("Materia").Include("Formato").Include("Aula").FirstOrDefault(x => x.Id == inscripcion.Fk_Curso);
                 inscripcion.Curso.Modulos = new List<Modulos>();
                 var modulos = inscripcion.Curso.ModulosId.Split(',').ToList();
                 modulos.ForEach(x => {

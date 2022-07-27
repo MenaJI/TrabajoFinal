@@ -25,7 +25,6 @@ namespace ApiREST.DataProvider
         public DbSet<Localidades> Localidades { get; set; }
         public DbSet<Nacionalidades> Nacionalidades { get; set; }
         public DbSet<TiposDocs> TiposDocs { get; set; }
-        public DbSet<Condiciones> Condiciones { get; set; }
         public DbSet<Aulas> Aulas { get; set; }
         public DbSet<Dias> Dias { get; set; }
         public DbSet<Horarios> Horarios { get; set; }
@@ -37,7 +36,6 @@ namespace ApiREST.DataProvider
         public DbSet<Regimenes> Regimenes { get; set; }
         public DbSet<Campos> Campos { get; set; }
         public DbSet<Cursos> Cursos { get; set; }
-        public DbSet<CondicionesCurso> CondicionesCurso { get; set; }
         public DbSet<Formatos> Formatos { get; set; }
         public DbSet<InscripcionesMateria> InscripcionesMateria { get; set; }
         public DbSet<Archivos> Archivos { get; set; }

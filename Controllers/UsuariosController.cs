@@ -50,17 +50,9 @@ namespace ApiREST.Controllers
 
         [HttpPost("send")]
         public async Task<IActionResult> SendMail([FromForm]MailRequest request)
-        {
-            try
-            {
-                await emailService.SendEmailAsync(request);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-                
+        {  
+            await emailService.SendEmailAsync(request);
+            return Ok();   
         }
 
         [HttpGet("RecuperarContrasenia")]

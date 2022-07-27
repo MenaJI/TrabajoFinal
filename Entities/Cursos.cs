@@ -23,10 +23,6 @@ namespace ApiREST.Entities
         public int Fk_Materia { get; set; }
         public Materias Materia { get; set; }
 
-        [ForeignKey("CondicionCurso")]
-        public int Fk_CondicionCurso { get; set; }
-        public CondicionesCurso CondicionCurso { get; set; }
-
         [ForeignKey("Formato")]
         public int Fk_Formato { get; set; }
         public Formatos Formato { get; set; }
@@ -42,6 +38,5 @@ namespace ApiREST.Entities
         public List<Docentes> Docentes { get; set; }
         [NotMapped]
         public virtual List<Modulos> Modulos { get; set; }
-
     }
 }

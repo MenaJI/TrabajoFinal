@@ -29,7 +29,7 @@ namespace ApiREST.Controllers
         public ActionResult<IEnumerable<Cursos>> GetAll()
         {
 
-            var cursos = cursosServices.Get("Formato,Aula,Materia,CondicionCurso");
+            var cursos = cursosServices.Get("Formato,Aula,Materia");
 
             if (cursos.Any())
             {
@@ -97,15 +97,5 @@ namespace ApiREST.Controllers
 
             return Ok(result);
         }
-
-
-        // [HttpGet("ObtenerCursosDisponibles")]
-        // public ActionResult ObtenerCursosDisponibles(string username)
-        // {
-
-        //     var result = this.cursosServices.ObtenerCursosDisponibles(username);
-
-        //     return Ok(result);
-        // }
     }
 }

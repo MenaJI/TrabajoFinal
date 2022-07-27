@@ -56,7 +56,6 @@ namespace ApiREST
             services.AddScoped<ILocalidadesService, LocalidadesService>();
             services.AddScoped<INacionalidadesService, NacionalidadesService>();
             services.AddScoped<ITiposDocsService, TiposDocsService>();
-            services.AddScoped<ICondicionesService, CondicionesService>();
             services.AddScoped<IAulasService, AulasService>();
             services.AddScoped<IDiasService, DiasService>();
             services.AddScoped<IHorariosService, HorariosService>();
@@ -67,7 +66,6 @@ namespace ApiREST
             services.AddScoped<IAniosService, AniosService>();
             services.AddScoped<IRegimenesService, RegimenesService>();
             services.AddScoped<ICamposService, CamposService>();
-            services.AddScoped<ICondicionesCursoService, CondicionesCursoService>();
             services.AddScoped<IFormatosService, FormatosService>();
             services.AddScoped<IInscripcionesMateriaService, InscripcionesMateriaService>();
             services.AddScoped<IArchivosServices, ArchivoService>();
