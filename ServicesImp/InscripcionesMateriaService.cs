@@ -80,15 +80,13 @@ namespace ApiREST.ServicesImp
             if (inscripcion == null)
                 return null;
 
-            var alumno = alumnosServices.Get(x => x.Id == inscripcion.Fk_Alumno, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(x => x.Id == inscripcion.Fk_Alumno, "TipoDoc,DireccionOcupacion,DireccionDomicilio,PaisNacimiento,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
             if (alumno == null)
                 return null;
 
-            var materia = dataProvider.Materias.Include("Anio")
-                                                .Include("Regimen")
-                                                .Include("Campo")
-                                                .Include("Carrera")
-                                                .FirstOrDefault(x => x.Id == inscripcion.Materias.Id);
+            var direccion = dataProvider.Direcciones.Include("Localidad").FirstOrDefault(x => x.Id == alumno.DireccionDomicilio.Id);
+            var ocupacion = dataProvider.Direcciones.Include("Localidad").FirstOrDefault(x => x.Id == alumno.DireccionOcupacion.Id);
+            var materia = dataProvider.Materias.Include("Anio").Include("Regimen").Include("Campo").Include("Carrera").FirstOrDefault(x => x.Id == inscripcion.Materias.Id);
             if (materia == null)
                 return null;
 
@@ -110,6 +108,24 @@ namespace ApiREST.ServicesImp
                     Nacionalidad = alumno.Nacionalidad.Descrip,
                     CarreraNombre = materia.Carrera.Descripcion,
                     MateriasCorrelativas = materiasCorrelativas,
+                    PaisDeNacimiento = alumno.PaisNacimiento.Descripcion,
+                    DomicilioCalle = direccion.Calle,
+                    DomicilioNumero = direccion.Numero,
+                    DomicilioLocalidad = direccion.Localidad.Descrip,
+                    DomicilioDepartamento = direccion.Departamento,
+                    DomicilioPiso = direccion.Piso,
+                    DomicilioTelefono = direccion.Telefono,
+                    Discapacidad = alumno.Discapacidad,
+                    DiscapacidadDescripcion = alumno.TipoDiscapacidad,
+                    OcupacionCalle = ocupacion.Calle,
+                    OcupacionDepartamento = ocupacion.Departamento,
+                    OcupacionLocalidad = ocupacion.Localidad.Descrip,
+                    OcupacionNumero = ocupacion.Numero,
+                    OcupacionPiso = ocupacion.Piso,
+                    OcupacionTelefono = ocupacion.Telefono,
+                    PuebloOriginario = alumno.PuebloOriginario,
+                    Etnia = alumno.Etnia,
+                    Comunidad = alumno.Comunidad,
                 };
 
 

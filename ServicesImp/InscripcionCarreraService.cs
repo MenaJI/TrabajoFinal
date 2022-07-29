@@ -4,6 +4,7 @@ using ApiREST.DataProvider;
 using ApiREST.Entities;
 using ApiREST.Services;
 using ApiREST.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiREST.ServicesImp
 {
@@ -22,7 +23,10 @@ namespace ApiREST.ServicesImp
             
             DetalleInscripcionCarrera result = null;
 
-            var alumno = alumnosServices.Get(a => a.InscripcionCarreras.Any(i => i.Id == IdInscripcion), "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(a => a.InscripcionCarreras.Any(i => i.Id == IdInscripcion), "TipoDoc,DireccionOcupacion,DireccionDomicilio,PaisNacimiento,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil,").FirstOrDefault();
+            var direccion = dataProvider.Direcciones.Include("Localidad").FirstOrDefault(x => x.Id == alumno.DireccionDomicilio.Id);
+            var ocupacion = dataProvider.Direcciones.Include("Localidad").FirstOrDefault(x => x.Id == alumno.DireccionOcupacion.Id);
+
             if (alumno != null)
                 result = new DetalleInscripcionCarrera(){
                     UserNameAlumno = alumno.NombreUsuario,
@@ -34,6 +38,24 @@ namespace ApiREST.ServicesImp
                     Localidad = alumno.Localidad.Descrip,
                     EstadoCivil = alumno.EstadoCivil.Descrip,
                     Nacionalidad = alumno.Nacionalidad.Descrip,
+                    PaisDeNacimiento = alumno.PaisNacimiento.Descripcion,
+                    DomicilioCalle = direccion.Calle,
+                    DomicilioNumero = direccion.Numero,
+                    DomicilioLocalidad = direccion.Localidad.Descrip,
+                    DomicilioDepartamento = direccion.Departamento,
+                    DomicilioPiso = direccion.Piso,
+                    DomicilioTelefono = direccion.Telefono,
+                    Discapacidad = alumno.Discapacidad,
+                    DiscapacidadDescripcion = alumno.TipoDiscapacidad,
+                    OcupacionCalle = ocupacion.Calle,
+                    OcupacionDepartamento = ocupacion.Departamento,
+                    OcupacionLocalidad = ocupacion.Localidad.Descrip,
+                    OcupacionNumero = ocupacion.Numero,
+                    OcupacionPiso = ocupacion.Piso,
+                    OcupacionTelefono = ocupacion.Telefono,
+                    PuebloOriginario = alumno.PuebloOriginario,
+                    Etnia = alumno.Etnia,
+                    Comunidad = alumno.Comunidad,
                 };
 
             return result;
