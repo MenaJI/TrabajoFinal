@@ -54,6 +54,7 @@ namespace ApiREST
             services.AddScoped<IEstadosCivilesService, EstadosCivilesService>();
             services.AddScoped<IGenerosService, GenerosService>();
             services.AddScoped<ILocalidadesService, LocalidadesService>();
+            services.AddScoped<IPaisesService, PaisesService>();
             services.AddScoped<INacionalidadesService, NacionalidadesService>();
             services.AddScoped<ITiposDocsService, TiposDocsService>();
             services.AddScoped<IAulasService, AulasService>();

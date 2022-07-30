@@ -189,10 +189,10 @@ namespace ApiREST.ServicesImp
         public async Task<Response> CambiarContrasenia(string userIdentification, string nuevaContrasenia)
         {
             var user = await userManager.FindByNameAsync(userIdentification);
-            var contrasenia = user.Contrasenia;
+            
             if (user == null)
-                return new Response();
-
+                return new Response(){ Status = "ERROR", Message = "Error al obtener el usuario"};
+            var contrasenia = user.Contrasenia;
             await userManager.ChangePasswordAsync(user,user.Contrasenia,nuevaContrasenia);
 
             user.Contrasenia = nuevaContrasenia;
