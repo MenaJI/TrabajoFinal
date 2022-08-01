@@ -7,6 +7,11 @@ namespace ApiREST.Entities
     {
         public virtual List<InscripcionCarrera> InscripcionCarreras { get; set; }
 
+        public int CertificadoSaludId { get; set; }
+
+        public int CertificadoSecundariaId { get; set; }
+
+        public int FotoId { get; set; }
         [NotMapped]
         public string NombreCompleto
         {

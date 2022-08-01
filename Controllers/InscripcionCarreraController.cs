@@ -58,12 +58,12 @@ namespace ApiREST.Controllers
             if (!string.IsNullOrEmpty(carrera))
                 carreraId = carrerasService.Get(x => x.Descripcion == carrera, "").FirstOrDefault().Id;
 
-            if (!string.IsNullOrEmpty(nombreApellido) && nombreApellido != "null" && !string.IsNullOrEmpty(dni))
+            if (!string.IsNullOrEmpty(nombreApellido) && nombreApellido != "null")
                 alumno = alumnosServices.Get(x => (x.NombreCompleto.Contains(nombreApellido)
-                || x.NombreCompleto == nombreApellido
-                || x.NroDocumento == alumnoDNI),
+                || x.NombreCompleto == nombreApellido),
                 "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil")
                 .FirstOrDefault();
+
             if (alumno == null && alumnoDNI != 0)
                 alumno = alumnosServices.Get(x => x.NroDocumento == alumnoDNI,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
 

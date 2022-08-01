@@ -56,6 +56,25 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
+        public async Task<Response> VerificarUsuario (string emailEncriptado){
+            var result = new Response();
+            
+            var email = Encriptador.DecryptString(emailEncriptado);
+
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                return new Response(){ Status = "Error", Message = "Correo o nombre de usuario incorrecto." };
+
+            user.EmailConfirmed = true;
+
+            await userManager.UpdateAsync(user);
+
+            result.Status = "Ok";
+            result.Message = "El usuario ha sido verificado correctamente.";
+
+            return result;
+        }
+
         public async Task<Response> RecuperarContrasenia(string userIdentification, string direccion){
 
             var user = await userManager.FindByNameAsync(userIdentification);
@@ -142,7 +161,7 @@ namespace ApiREST.ServicesImp
                 await emailService.SendEmailAsync(new MailRequest(){
                     ToEmail = model.Email,
                     Subject = "Verificacion de contraseña",
-                    Body = $"<a> https://localhost:5001/api/Usuarios/VerificarUsuario?userCode={codigoVerificacion} </a>",
+                    Body = $" Para verificar el usuario haga click <a href='http://localhost:4200/usuario/verificacion?userCode={codigoVerificacion}'>aquí</a>",
                 });
 
                 var userExists = await userManager.FindByNameAsync(model.NombreUsuario);

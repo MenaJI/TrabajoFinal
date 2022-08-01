@@ -64,9 +64,17 @@ namespace ApiREST.Controllers
         }
 
         [HttpGet("CambiarContrasenia")]
-        public async Task<IActionResult> VerificarUsuario(string userIdentification, string nuevaContrasenia){
+        public async Task<IActionResult> CambiarContrasenia(string userIdentification, string nuevaContrasenia){
             
             var result = await usuariosService.CambiarContrasenia(userIdentification, nuevaContrasenia);
+            
+            return Ok(result);
+        }
+
+        [HttpGet("VerificarUsuario")]
+        public async Task<IActionResult> VerificarUsuario(string userCode){
+            
+            var result = await usuariosService.VerificarUsuario(userCode);
             
             return Ok(result);
         }

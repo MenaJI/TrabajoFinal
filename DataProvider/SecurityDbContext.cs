@@ -43,5 +43,6 @@ namespace ApiREST.DataProvider
         public DbSet<Direcciones> Direcciones { get;set; }
         public DbSet<Paises> Paises { get;set; }
         public DbSet<Materias> Materias { get;set; }
+        public DbSet<Periodos> Periodos { get;set; }
     }
 }

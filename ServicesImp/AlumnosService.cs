@@ -71,7 +71,7 @@ namespace ApiREST.ServicesImp
 
                 return alumno;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -118,7 +118,7 @@ namespace ApiREST.ServicesImp
                     Numero = domicilioDireccion.Numero,
                     Piso = domicilioDireccion.Piso,
                     Dpto = domicilioDireccion.Departamento,
-                    Localidad = domicilioDireccion.Localidad.Descrip,
+                    Localidad = domicilioDireccion.Localidad != null ? domicilioDireccion.Localidad.Descrip : null,
                     Telefono = domicilioDireccion.Telefono
                 } : null,
                 Ocupacion = !string.IsNullOrEmpty(alumno.Ocupacion) ? alumno.Ocupacion : "",
@@ -128,7 +128,7 @@ namespace ApiREST.ServicesImp
                     Numero = ocupacionDireccion.Numero,
                     Piso = ocupacionDireccion.Piso,
                     Dpto = ocupacionDireccion.Departamento,
-                    Localidad = ocupacionDireccion.Localidad.Descrip,
+                    Localidad = ocupacionDireccion.Localidad != null ? ocupacionDireccion.Localidad.Descrip : null,
                     Telefono = ocupacionDireccion.Telefono
                 } : null,
                 PaisNacimiento = alumno.PaisNacimiento != null ? alumno.PaisNacimiento.Descripcion : "",
@@ -156,9 +156,23 @@ namespace ApiREST.ServicesImp
                 Nacionalidad = dataProvider.Nacionalidades.FirstOrDefault(n => n.Descrip == model.Nacionalidad),
                 EstadoCivil = dataProvider.EstadosCiviles.FirstOrDefault(ec => ec.Descrip == model.EstadoCivil),
                 NombreUsuario = model.NombreUsuario,
-                DireccionDomicilio = dataProvider.Direcciones.FirstOrDefault(x => x.Id == model.Domicilio.Id),
+                DireccionDomicilio = new Direcciones(){
+                    Calle = !string.IsNullOrEmpty(model.Domicilio.Calle) ? model.Domicilio.Calle : null,
+                    Numero = !string.IsNullOrEmpty(model.Domicilio.Numero) ? model.Domicilio.Numero : null,
+                    Localidad = !string.IsNullOrEmpty(model.Domicilio.Localidad) ? dataProvider.Localidades.FirstOrDefault(l => l.Descrip == model.Domicilio.Localidad) : null,
+                    Departamento = !string.IsNullOrEmpty(model.Domicilio.Dpto) ? model.Domicilio.Dpto : null,
+                    Telefono = !string.IsNullOrEmpty(model.Domicilio.Telefono) ? model.Domicilio.Telefono : null,
+                    Piso = !string.IsNullOrEmpty(model.Domicilio.Piso) ? model.Domicilio.Piso : null,
+                },
                 Ocupacion = model.Ocupacion,
-                DireccionOcupacion = dataProvider.Direcciones.FirstOrDefault(x => x.Id == model.OcupacionDireccion.Id),
+                DireccionOcupacion = new Direcciones(){
+                    Calle = !string.IsNullOrEmpty(model.OcupacionDireccion.Calle) ? model.OcupacionDireccion.Calle : null,
+                    Numero = !string.IsNullOrEmpty(model.OcupacionDireccion.Numero) ? model.OcupacionDireccion.Numero : null,
+                    Localidad = !string.IsNullOrEmpty(model.OcupacionDireccion.Localidad) ? dataProvider.Localidades.FirstOrDefault(l => l.Descrip == model.Domicilio.Localidad) : null,
+                    Departamento = !string.IsNullOrEmpty(model.OcupacionDireccion.Dpto) ? model.OcupacionDireccion.Dpto : null,
+                    Telefono = !string.IsNullOrEmpty(model.OcupacionDireccion.Telefono) ? model.OcupacionDireccion.Telefono : null,
+                    Piso = !string.IsNullOrEmpty(model.OcupacionDireccion.Piso) ? model.OcupacionDireccion.Piso : null,
+                },
                 PuebloOriginario = model.PuebloOriginario,
                 Etnia = model.Etnia,
                 Comunidad = model.Comunidad,
