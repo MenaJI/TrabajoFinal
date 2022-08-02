@@ -34,9 +34,9 @@ namespace ApiREST.Controllers
         [HttpPost("AddItem")]
         public ActionResult AddItem([FromBody] Modulos modulo)
         {
-            modulosService.Insert(modulo);
-
-            return Ok(modulo);
+            var result = modulosService.Insert(modulo);
+            result = modulosService.Get(x => x.Id == result.Id, "Dia,Horario").FirstOrDefault();
+            return Ok(result);
         }
 
         [HttpPut("ChangeItem")]

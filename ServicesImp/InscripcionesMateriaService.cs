@@ -16,7 +16,7 @@ namespace ApiREST.ServicesImp
         private readonly IModulosService modulosService;
         private readonly IDocentesServices docentesServices;
 
-        public InscripcionesMateriaService(SecurityDbContext context, 
+        public InscripcionesMateriaService(SecurityDbContext context,
         IAlumnosServices _alumnosService,
         IModulosService _modulosService,
         IDocentesServices _docentesServices) : base(context)
@@ -29,26 +29,28 @@ namespace ApiREST.ServicesImp
 
         public List<InscripcionesMateria> GetByUserName(string username)
         {
-            var alumno = alumnosServices.Get(a => a.NombreUsuario == username,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+            var alumno = alumnosServices.Get(a => a.NombreUsuario == username, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
 
             if (alumno == null)
                 return null;
 
-            var InscripcionesMateria = Get(x => x.Fk_Alumno == alumno.Id,"Curso").ToList();
-            
+            var InscripcionesMateria = Get(x => x.Fk_Alumno == alumno.Id, "Curso").ToList();
+
             if (!InscripcionesMateria.Any() || InscripcionesMateria == null)
                 return null;
 
-            foreach(var inscripcion in InscripcionesMateria){
+            foreach (var inscripcion in InscripcionesMateria)
+            {
                 inscripcion.Alumno = alumno;
                 inscripcion.Curso = dataProvider.Cursos.Include("Materia").Include("Formato").Include("Aula").FirstOrDefault(x => x.Id == inscripcion.Fk_Curso);
                 inscripcion.Curso.Modulos = new List<Modulos>();
                 var modulos = inscripcion.Curso.ModulosId.Split(',').ToList();
-                modulos.ForEach(x => {
+                modulos.ForEach(x =>
+                {
                     Modulos modulo = null;
                     if (!string.IsNullOrEmpty(x))
-                        modulo = modulosService.Get(m => m.Id == Int32.Parse(x),"Dia,Horario").FirstOrDefault();
-                    
+                        modulo = modulosService.Get(m => m.Id == Int32.Parse(x), "Dia,Horario").FirstOrDefault();
+
                     if (modulo != null)
                         inscripcion.Curso.Modulos.Add(modulo);
                 });
@@ -57,16 +59,17 @@ namespace ApiREST.ServicesImp
 
                 var docentes = inscripcion.Curso.DocentesId.Split(',').ToList();
                 inscripcion.Curso.Docentes = new List<Docentes>();
-                modulos.ForEach(x => {
+                modulos.ForEach(x =>
+                {
                     Docentes docente = null;
                     if (!string.IsNullOrEmpty(x))
-                        docente = docentesServices.Get(d => d.Id == Int32.Parse(x),"").FirstOrDefault();
+                        docente = docentesServices.Get(d => d.Id == Int32.Parse(x), "").FirstOrDefault();
 
                     if (docente != null)
                         inscripcion.Curso.Docentes.Add(docente);
                 });
             }
-                
+
 
             return InscripcionesMateria;
         }
@@ -90,13 +93,15 @@ namespace ApiREST.ServicesImp
             if (materia == null)
                 return null;
 
-            materia.MateriasCorrelativas.Split(',').ToList().ForEach(x => {
+            materia.MateriasCorrelativas.Split(',').ToList().ForEach(x =>
+            {
                 if (Int32.TryParse(x, out var result))
                     materiasCorrelativas.Add(dataProvider.Materias.FirstOrDefault(m => m.Id == result).Descrip);
             });
 
             if (alumno != null)
-                result = new DetalleInscripcionMateriaModel(){
+                result = new DetalleInscripcionMateriaModel()
+                {
                     UserNameAlumno = alumno.NombreUsuario,
                     NombreAlumno = alumno.Nombre,
                     ApellidoAlumno = alumno.Apellido,
@@ -109,20 +114,20 @@ namespace ApiREST.ServicesImp
                     CarreraNombre = materia.Carrera.Descripcion,
                     MateriasCorrelativas = materiasCorrelativas,
                     PaisDeNacimiento = alumno.PaisNacimiento.Descripcion,
-                    DomicilioCalle = direccion.Calle,
-                    DomicilioNumero = direccion.Numero,
-                    DomicilioLocalidad = direccion.Localidad.Descrip,
-                    DomicilioDepartamento = direccion.Departamento,
-                    DomicilioPiso = direccion.Piso,
-                    DomicilioTelefono = direccion.Telefono,
+                    DomicilioCalle = direccion != null ? direccion.Calle : "",
+                    DomicilioNumero = direccion != null ? direccion.Numero : "",
+                    DomicilioLocalidad = direccion != null ? direccion.Localidad.Descrip : "",
+                    DomicilioDepartamento = direccion != null ? direccion.Departamento : "",
+                    DomicilioPiso = direccion != null ? direccion.Piso : "",
+                    DomicilioTelefono = direccion != null ? direccion.Telefono : "",
                     Discapacidad = alumno.Discapacidad,
                     DiscapacidadDescripcion = alumno.TipoDiscapacidad,
-                    OcupacionCalle = ocupacion.Calle,
-                    OcupacionDepartamento = ocupacion.Departamento,
-                    OcupacionLocalidad = ocupacion.Localidad.Descrip,
-                    OcupacionNumero = ocupacion.Numero,
-                    OcupacionPiso = ocupacion.Piso,
-                    OcupacionTelefono = ocupacion.Telefono,
+                    OcupacionCalle = ocupacion.Calle != null ? ocupacion.Calle : "",
+                    OcupacionDepartamento = ocupacion.Departamento != null ? ocupacion.Departamento : "",
+                    OcupacionLocalidad = ocupacion.Localidad != null ? ocupacion.Localidad.Descrip : "",
+                    OcupacionNumero = ocupacion.Numero != null ? ocupacion.Numero : "",
+                    OcupacionPiso = ocupacion.Piso != null ? ocupacion.Piso : "",
+                    OcupacionTelefono = ocupacion.Telefono != null ? ocupacion.Telefono : "",
                     PuebloOriginario = alumno.PuebloOriginario,
                     Etnia = alumno.Etnia,
                     Comunidad = alumno.Comunidad,

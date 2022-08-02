@@ -51,7 +51,7 @@ namespace ApiREST.Controllers
                 string.IsNullOrEmpty(dni) &&
                 string.IsNullOrEmpty(carrera) &&
                 string.IsNullOrEmpty(estado))
-                return Ok(inscripcionCarreraService.Get("Curso"));
+                return Ok(inscripcionCarreraService.Get("Carrera"));
 
             if (double.TryParse(dni, out var doubleDNI))
                 alumnoDNI = doubleDNI;
@@ -63,7 +63,7 @@ namespace ApiREST.Controllers
                 || x.NombreCompleto == nombreApellido),
                 "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil")
                 .FirstOrDefault();
-
+            
             if (alumno == null && alumnoDNI != 0)
                 alumno = alumnosServices.Get(x => x.NroDocumento == alumnoDNI,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
 

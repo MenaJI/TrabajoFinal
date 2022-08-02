@@ -56,14 +56,13 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Response> VerificarUsuario (string emailEncriptado){
+        public async Task<Response> VerificarUsuario(string emailEncriptado)
+        {
             var result = new Response();
-            
-            var email = Encriptador.DecryptString(emailEncriptado);
 
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByNameAsync(emailEncriptado);
             if (user == null)
-                return new Response(){ Status = "Error", Message = "Correo o nombre de usuario incorrecto." };
+                return new Response() { Status = "Error", Message = "Correo o nombre de usuario incorrecto." };
 
             user.EmailConfirmed = true;
 
@@ -75,25 +74,27 @@ namespace ApiREST.ServicesImp
             return result;
         }
 
-        public async Task<Response> RecuperarContrasenia(string userIdentification, string direccion){
+        public async Task<Response> RecuperarContrasenia(string userIdentification, string direccion)
+        {
 
             var user = await userManager.FindByNameAsync(userIdentification);
             if (user == null)
                 user = await this.userManager.FindByEmailAsync(userIdentification);
 
             if (user == null)
-                return new Response(){ Status = "Error", Message = "Correo o nombre de usuario incorrecto." };
+                return new Response() { Status = "Error", Message = "Correo o nombre de usuario incorrecto." };
 
             var result = new Response();
 
-            await emailService.SendEmailAsync(new MailRequest(){
+            await emailService.SendEmailAsync(new MailRequest()
+            {
                 ToEmail = user.Email,
                 Subject = "Recuperar contraseña",
-                Body = $"Para recuperar contraseña hace click <a href='http://localhost:4200/usuario/cambiar-contrasenia?userName={user.UserName}'>aqui!</a>",
+                Body = $"Para recuperar contraseña haga click <a href='http://localhost:4200/usuario/cambiar-contrasenia?userName={user.UserName}'>aqui!</a>",
             });
-            
+
             result.Status = "Ok";
-            result.Message = "Correo electronico enviado correectamente.";
+            result.Message = "Se ha enviado un correo electrónico para restablecer la contraseña.";
 
             return result;
         }
@@ -156,9 +157,10 @@ namespace ApiREST.ServicesImp
         {
             try
             {
-                var codigoVerificacion = Encriptador.EncryptString(model.Email);
+                var codigoVerificacion = model.NombreUsuario;
 
-                await emailService.SendEmailAsync(new MailRequest(){
+                await emailService.SendEmailAsync(new MailRequest()
+                {
                     ToEmail = model.Email,
                     Subject = "Verificacion de contraseña",
                     Body = $" Para verificar el usuario haga click <a href='http://localhost:4200/usuario/verificacion?userCode={codigoVerificacion}'>aquí</a>",
@@ -195,7 +197,7 @@ namespace ApiREST.ServicesImp
 
                 await userManager.AddToRoleAsync(usuario, rolBase.ToString());
 
-                
+
                 return new Response { Status = "Success", Message = "El usuario fue creado con exito." };
 
             }
@@ -208,16 +210,17 @@ namespace ApiREST.ServicesImp
         public async Task<Response> CambiarContrasenia(string userIdentification, string nuevaContrasenia)
         {
             var user = await userManager.FindByNameAsync(userIdentification);
-            
+
             if (user == null)
-                return new Response(){ Status = "ERROR", Message = "Error al obtener el usuario"};
+                return new Response() { Status = "ERROR", Message = "Error al obtener el usuario" };
             var contrasenia = user.Contrasenia;
-            await userManager.ChangePasswordAsync(user,user.Contrasenia,nuevaContrasenia);
+            await userManager.ChangePasswordAsync(user, user.Contrasenia, nuevaContrasenia);
 
             user.Contrasenia = nuevaContrasenia;
             await userManager.UpdateAsync(user);
 
-            var response = new Response(){
+            var response = new Response()
+            {
                 Status = "OK",
                 Message = "Se cambio la contraseña correctamente."
             };

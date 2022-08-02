@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using ApiREST.Entities;
+using ApiREST.Models;
 using ApiREST.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +21,7 @@ namespace ApiREST.Controllers
             return Ok(periodosService.Get());
         }
 
-        [HttpGet("GetHorario/{id:int}")]
+        [HttpGet("GetPeriodo")]
         public ActionResult<Periodos> GetById(int id)
         {
             Periodos periodo = periodosService.GetByID(id);
@@ -52,6 +54,17 @@ namespace ApiREST.Controllers
             periodosService.Delete(periodo);
 
             return Ok();
+        }
+
+        [HttpGet("ValidarPeriodoDeInscripcion")]
+        public ActionResult ValidarPeriodo()
+        {
+            var result = periodosService.GetByID(1);
+            var fechaActual = DateTime.Now;
+            if (result.FechaIncio < fechaActual && result.FechaFin > fechaActual)
+                return Ok(new Response() { Status = "Ok" });
+            else
+                return Ok(new Response() { Status = "Error" });
         }
     }
 }
