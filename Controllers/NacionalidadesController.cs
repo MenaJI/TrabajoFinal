@@ -41,9 +41,9 @@ namespace ApiREST.Controllers
         [HttpPut("ChangeItem")]
         public ActionResult RemplaseItem(Nacionalidades nacionalidad)
         {
-            nacionalidadesService.Insert(nacionalidad);
+            nacionalidadesService.Update(nacionalidad);
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("RemoveItem")]

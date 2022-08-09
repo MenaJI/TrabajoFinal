@@ -63,9 +63,9 @@ namespace ApiREST.Controllers
                 || x.NombreCompleto == nombreApellido),
                 "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil")
                 .FirstOrDefault();
-            
+
             if (alumno == null && alumnoDNI != 0)
-                alumno = alumnosServices.Get(x => x.NroDocumento == alumnoDNI,"TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
+                alumno = alumnosServices.Get(x => x.NroDocumento == alumnoDNI, "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil").FirstOrDefault();
 
             if (alumno != null)
                 alumno.InscripcionCarreras.ToList().ForEach(ic =>

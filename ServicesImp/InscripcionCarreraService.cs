@@ -12,15 +12,16 @@ namespace ApiREST.ServicesImp
     {
         private readonly SecurityDbContext dataProvider;
         private readonly IAlumnosServices alumnosServices;
-        
+
         public InscripcionCarreraService(SecurityDbContext context, IAlumnosServices _alumnosServices) : base(context)
         {
             dataProvider = context;
             alumnosServices = _alumnosServices;
         }
 
-        public DetalleInscripcionCarrera ObtenerDetallesInscripcionCarrera(int IdInscripcion){
-            
+        public DetalleInscripcionCarrera ObtenerDetallesInscripcionCarrera(int IdInscripcion)
+        {
+
             DetalleInscripcionCarrera result = null;
 
             var alumno = alumnosServices.Get(a => a.InscripcionCarreras.Any(i => i.Id == IdInscripcion), "TipoDoc,DireccionOcupacion,DireccionDomicilio,PaisNacimiento,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil,").FirstOrDefault();
@@ -28,7 +29,8 @@ namespace ApiREST.ServicesImp
             var ocupacion = dataProvider.Direcciones.Include("Localidad").FirstOrDefault(x => x.Id == alumno.DireccionOcupacion.Id);
 
             if (alumno != null)
-                result = new DetalleInscripcionCarrera(){
+                result = new DetalleInscripcionCarrera()
+                {
                     UserNameAlumno = alumno.NombreUsuario,
                     NombreAlumno = alumno.Nombre,
                     ApellidoAlumno = alumno.Apellido,
@@ -39,12 +41,12 @@ namespace ApiREST.ServicesImp
                     EstadoCivil = alumno.EstadoCivil.Descrip,
                     Nacionalidad = alumno.Nacionalidad.Descrip,
                     PaisDeNacimiento = alumno.PaisNacimiento.Descripcion,
-                    DomicilioCalle = direccion != null ? direccion.Calle : "",
-                    DomicilioNumero = direccion != null ? direccion.Numero : "",
-                    DomicilioLocalidad = direccion != null ? direccion.Localidad.Descrip : "",
-                    DomicilioDepartamento = direccion != null ? direccion.Departamento : "",
-                    DomicilioPiso = direccion != null ? direccion.Piso : "",
-                    DomicilioTelefono = direccion != null ? direccion.Telefono : "",
+                    DomicilioCalle = direccion.Calle != null ? direccion.Calle : "",
+                    DomicilioNumero = direccion.Numero != null ? direccion.Numero : "",
+                    DomicilioLocalidad = direccion.Localidad != null ? direccion.Localidad.Descrip : "",
+                    DomicilioDepartamento = direccion.Departamento != null ? direccion.Departamento : "",
+                    DomicilioPiso = direccion.Piso != null ? direccion.Piso : "",
+                    DomicilioTelefono = direccion.Telefono != null ? direccion.Telefono : "",
                     Discapacidad = alumno.Discapacidad,
                     DiscapacidadDescripcion = alumno.TipoDiscapacidad,
                     OcupacionCalle = ocupacion.Calle != null ? ocupacion.Calle : "",

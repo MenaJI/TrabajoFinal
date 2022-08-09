@@ -107,6 +107,9 @@ namespace ApiREST.ServicesImp
 
             TokenModel result = null;
 
+            if (user == null)
+                return result;
+
             if (!user.EmailConfirmed)
                 return result;
 
@@ -162,7 +165,7 @@ namespace ApiREST.ServicesImp
                 await emailService.SendEmailAsync(new MailRequest()
                 {
                     ToEmail = model.Email,
-                    Subject = "Verificacion de contraseña",
+                    Subject = "Verificación de usuario",
                     Body = $" Para verificar el usuario haga click <a href='http://localhost:4200/usuario/verificacion?userCode={codigoVerificacion}'>aquí</a>",
                 });
 

@@ -35,16 +35,18 @@ namespace ApiREST.ServicesImp
             dataProvider = context;
         }
 
-        
+
 
         // Inscribe automaticamente a todas las materias de primer año de la 
         public void InscripcionesAutomaticasPrimerAño(Alumnos alumno, Carreras carrera)
         {
-            var listaCursadoPrimerAnio = Get(c => c.FechaInicio.Year == DateTime.Now.Year && c.Anio == 1, "Materia");
+            var listaCursadoPrimerAnio = Get(c => c.FechaInicio.Year == DateTime.Now.Year, "Materia");
             // var condicion = dataProvider.Condiciones.FirstOrDefault(c => c.Descrip == "REGULAR");
-            foreach (var curso in listaCursadoPrimerAnio){
+            foreach (var curso in listaCursadoPrimerAnio.Where(x => x.Materia.Fk_Anio == 1))
+            {
                 dataProvider.InscripcionesMateria.Add(
-                    new InscripcionesMateria(){
+                    new InscripcionesMateria()
+                    {
                         Alumno = alumno,
                         Materias = curso.Materia,
                         Curso = curso,
@@ -52,6 +54,7 @@ namespace ApiREST.ServicesImp
                         Estado = "CONFIRMADA",
                     }
                 );
+                dataProvider.SaveChanges();
             }
         }
 
@@ -59,11 +62,13 @@ namespace ApiREST.ServicesImp
         {
             var cursos = Get("Formato,Aula,Materia").ToList();
 
-            cursos.ForEach( x => {
-                x.Materia = materiasService.Get(m => m.Id == x.Fk_Materia,"Anio,Regimen,Campo,Carrera").FirstOrDefault();
+            cursos.ForEach(x =>
+            {
+                x.Materia = materiasService.Get(m => m.Id == x.Fk_Materia, "Anio,Regimen,Campo,Carrera").FirstOrDefault();
                 x.Docentes = new List<Docentes>();
                 var docentes = x.DocentesId.Split(',').ToList();
-                foreach(var docente in docentes){
+                foreach (var docente in docentes)
+                {
                     if (!string.IsNullOrEmpty(docente) && Int32.TryParse(docente, out var result))
                         x.Docentes.Add(dataProvider.Docentes.FirstOrDefault(x => x.Id == result));
                 }
