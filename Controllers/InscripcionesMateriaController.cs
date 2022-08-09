@@ -145,7 +145,7 @@ namespace ApiREST.Controllers
                 string.IsNullOrEmpty(estado))
                 result = InscripcionMateriaService.Get("Curso,Alumno,Materias").ToList();
 
-            if (!string.IsNullOrEmpty(nombreApellido) || !string.IsNullOrEmpty(dni))
+            if (!string.IsNullOrEmpty(nombreApellido))
                 alumno = alumnosServices.Get(x => (x.NombreCompleto.Contains(nombreApellido)
                 || x.NombreCompleto == nombreApellido),
                 "TipoDoc,Genero,Localidad,InscripcionCarreras,Nacionalidad,EstadoCivil")

@@ -51,7 +51,7 @@ namespace ApiREST.ServicesImp
                         Materias = curso.Materia,
                         Curso = curso,
                         Fecha = DateTime.Now,
-                        Estado = "CONFIRMADA",
+                        Estado = "APROBADA",
                     }
                 );
                 dataProvider.SaveChanges();
