@@ -42,18 +42,20 @@ namespace ApiREST.ServicesImp
         {
             var listaCursadoPrimerAnio = Get(c => c.FechaInicio.Year == DateTime.Now.Year, "Materia");
             // var condicion = dataProvider.Condiciones.FirstOrDefault(c => c.Descrip == "REGULAR");
-            foreach (var curso in listaCursadoPrimerAnio.Where(x => x.Materia.Fk_Anio == 1))
+            var inscripcionesVigentes = inscripcionesMateriaService.Get(x => x.Fk_Alumno == alumno.Id, "Curso");
+            foreach (var curso in listaCursadoPrimerAnio.Where(x => x.Materia.Fk_Anio == 1 && x.Materia.Fk_Carrera == carrera.Id))
             {
-                dataProvider.InscripcionesMateria.Add(
-                    new InscripcionesMateria()
-                    {
-                        Alumno = alumno,
-                        Materias = curso.Materia,
-                        Curso = curso,
-                        Fecha = DateTime.Now,
-                        Estado = "APROBADA",
-                    }
-                );
+                if (!inscripcionesVigentes.Any(x => x.Fk_Curso == curso.Id && x.Estado != "RECHAZADA" && x.Estado != "ANULADA" && x.Curso.FechaInicio.Year == DateTime.Now.Year))
+                    dataProvider.InscripcionesMateria.Add(
+                        new InscripcionesMateria()
+                        {
+                            Alumno = alumno,
+                            Materias = curso.Materia,
+                            Curso = curso,
+                            Fecha = DateTime.Now,
+                            Estado = "APROBADA",
+                        }
+                    );
                 dataProvider.SaveChanges();
             }
         }

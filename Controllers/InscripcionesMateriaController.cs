@@ -176,6 +176,12 @@ namespace ApiREST.Controllers
             {
                 result = result.Where(x => x.Estado == estado).ToList();
             }
+            else if (!string.IsNullOrEmpty(estado))
+            {
+                result = InscripcionMateriaService.Get(x => x.Estado == estado, "Curso,Alumno,Materias").ToList();
+            }
+
+
 
             foreach (var im in result)
             {
